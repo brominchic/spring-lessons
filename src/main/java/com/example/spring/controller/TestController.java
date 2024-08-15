@@ -15,8 +15,8 @@ public class TestController {
     }
 
     @PostMapping("/main")
-    public String getMain(@RequestBody User user) {
-        return testComponent.getPage(user.getFirstname(), user.getLastname());
+    public User getMain(@RequestBody User user) {
+        return user;
     }
 
     @GetMapping("/test")
