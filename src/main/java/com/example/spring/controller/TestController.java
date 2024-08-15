@@ -33,4 +33,5 @@ public class TestController {
     public String getMainByRequestParam(@RequestParam String firstname, @RequestParam String lastname) {
         return testComponent.getPage(firstname, lastname);
     }
+
 }
