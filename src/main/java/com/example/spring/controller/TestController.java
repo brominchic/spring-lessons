@@ -4,7 +4,7 @@ import com.example.spring.component.TestComponent;
 import com.example.spring.users.User;
 import org.springframework.web.bind.annotation.*;
 
-
+@RequestMapping("/main")
 @RestController
 public class TestController {
 
@@ -14,22 +14,18 @@ public class TestController {
         this.testComponent = testComponent;
     }
 
-    @PostMapping("/main")
+    @PostMapping()
     public User getMain(@RequestBody User user) {
         return user;
     }
 
-    @GetMapping("/test")
-    public String test() {
-        return testComponent.test();
-    }
 
-    @GetMapping("/main/{firstname}/{lastname}")
+    @GetMapping("/{firstname}/{lastname}")
     public String getMainByPath(@PathVariable String firstname, @PathVariable String lastname) {
         return testComponent.getPage(firstname, lastname);
     }
 
-    @GetMapping("/main")
+    @GetMapping()
     public String getMainByRequestParam(@RequestParam String firstname, @RequestParam String lastname) {
         return testComponent.getPage(firstname, lastname);
     }
