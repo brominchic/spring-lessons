@@ -1,0 +1,88 @@
+{
+  "info": {
+    "_postman_id": "c2a22c3e-2c62-4bce-bb09-0c67ec2a03c7",
+    "name": "spring-example",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37112199"
+  },
+  "item": [
+    {
+      "name": "post-main",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstname\": \"brom\",\r\n    \"lastname\": \"nebrom\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/main",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "main"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "pathVariable",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/main/brom/titanovich",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "main",
+            "brom",
+            "titanovich"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "RequestParam",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/main?firstname=123&lastname=123",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "main"
+          ],
+          "query": [
+            {
+              "key": "firstname",
+              "value": "123"
+            },
+            {
+              "key": "lastname",
+              "value": "123"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
