@@ -1,7 +1,7 @@
 package com.example.spring.controller;
 
 import com.example.spring.component.TestComponent;
-import com.example.spring.users.User;
+import com.example.spring.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

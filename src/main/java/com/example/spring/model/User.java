@@ -1,4 +1,4 @@
-package com.example.spring.users;
+package com.example.spring.model;
 
 public class User {
     private String firstname;
