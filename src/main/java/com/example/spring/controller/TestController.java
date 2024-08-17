@@ -14,18 +14,18 @@ public class TestController {
         this.testComponent = testComponent;
     }
 
-    @PostMapping()
+    @PostMapping
     public User getMain(@RequestBody User user) {
         return user;
     }
 
 
-    @GetMapping("/{firstname}/{lastname}")
-    public String getMainByPath(@PathVariable String firstname, @PathVariable String lastname) {
+    @GetMapping("/{name}/{lastname}")
+    public String getMainByPath(@PathVariable(name = "name") String firstname, @PathVariable String lastname) {
         return testComponent.getPage(firstname, lastname);
     }
 
-    @GetMapping()
+    @GetMapping
     public String getMainByRequestParam(@RequestParam String firstname, @RequestParam String lastname) {
         return testComponent.getPage(firstname, lastname);
     }
