@@ -2,19 +2,19 @@ package com.example.spring.component;
 
 import com.example.spring.model.TaskInput;
 import com.example.spring.model.TaskOutput;
+import lombok.Builder;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+@Builder
 @Service
-public class ProcessorService {
+public class TaskProcessorService implements TaskProcessor {
+
     private final Map<String, TaskProcessor> processors;
 
-    public ProcessorService(Map<String, TaskProcessor> processors) {
-        this.processors = processors;
+    public TaskOutput process(TaskInput input) {
+        return processors.get(input.getTaskType()).process(input);
     }
 
-    public TaskOutput process(TaskInput input) {
-        return null;
-    }
 }
