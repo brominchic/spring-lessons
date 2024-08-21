@@ -1,12 +1,16 @@
 package com.example.spring.component;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
 
-@Component
-@Scope("prototype")
+
+@Slf4j
 public class NumGetterPrototype {
-    int num = 1;
+    int num;
+
+    public NumGetterPrototype() {
+        this.num = 0;
+        log.info("start");
+    }
 
     public int getNum() {
         num++;

@@ -4,12 +4,14 @@ import com.example.spring.component.NumGetterPrototype;
 import com.example.spring.component.NumGetterRequest;
 import com.example.spring.component.TaskProcessorService;
 import com.example.spring.component.TestComponent;
+import com.example.spring.config.ApplicationConfig;
 import com.example.spring.model.TaskInput;
 import com.example.spring.model.TaskOutput;
 import com.example.spring.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -20,7 +22,6 @@ public class TestController {
 
     private final TestComponent testComponent;
     private final TaskProcessorService taskProcessorService;
-    private final NumGetterPrototype numGetterPrototype;
     private final NumGetterRequest numGetterRequest;
 
     @PostMapping
@@ -46,19 +47,26 @@ public class TestController {
 
     @GetMapping("/num/prototype")
     public int getNumPrototype() {
+        log.info("Новый запрос");
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext.register(ApplicationConfig.class);
+        applicationContext.refresh();
+        NumGetterPrototype numGetterPrototype = (NumGetterPrototype) applicationContext.getBean("numGetterPrototype");
         log.info(String.valueOf(numGetterPrototype.getNum()));
+        numGetterPrototype = (NumGetterPrototype) applicationContext.getBean("numGetterPrototype");
         log.info(String.valueOf(numGetterPrototype.getNum()));
-        log.info(String.valueOf(numGetterPrototype.getNum()));
-        log.info(String.valueOf(numGetterPrototype.getNum()));
+        log.info("конец обработки запроса");
         return numGetterPrototype.getNum();
     }
 
     @GetMapping("/num/request")
     public int getNumRequest() {
+        log.info("Новый запрос");
         log.info(String.valueOf(numGetterRequest.getNum()));
         log.info(String.valueOf(numGetterRequest.getNum()));
         log.info(String.valueOf(numGetterRequest.getNum()));
         log.info(String.valueOf(numGetterRequest.getNum()));
+        log.info("конец обработки запроса");
         return numGetterRequest.getNum();
     }
 

@@ -9,9 +9,6 @@ public class OrderAutowireComponent {
 
     @Qualifier("logTaskProcessor")
     @Autowired
-    private final TaskProcessor service;
+    private TaskProcessor service;
 
-    public OrderAutowireComponent(@Qualifier("logTaskProcessor") TaskProcessor service) {
-        this.service = service;
-    }
 }

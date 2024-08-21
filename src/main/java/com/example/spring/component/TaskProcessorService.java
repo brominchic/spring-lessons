@@ -14,7 +14,9 @@ public class TaskProcessorService implements TaskProcessor {
     private final Map<String, TaskProcessor> processors;
 
     public TaskOutput process(TaskInput input) {
-        return processors.get(input.getTaskType()).process(input);
+        if (processors.containsKey(input.getTaskType())) {
+            return processors.get(input.getTaskType()).process(input);
+        } else return null;
     }
 
 }
