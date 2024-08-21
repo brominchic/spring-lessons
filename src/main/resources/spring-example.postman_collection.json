@@ -21,12 +21,12 @@
           }
         },
         "url": {
-          "raw": "http://localhost:8080/main",
+          "raw": "http://localhost:9999/main",
           "protocol": "http",
           "host": [
             "localhost"
           ],
-          "port": "8080",
+          "port": "9999",
           "path": [
             "main"
           ]
@@ -81,6 +81,52 @@
             }
           ]
         }
+      },
+      "response": []
+    },
+    {
+      "name": "process",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"taskType\": \"logTaskProcessor\",\r\n    \"taskId\": \"1\",\r\n    \"input\": \"nebrom\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/example-application/main/process",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "example-application",
+            "main",
+            "process"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "getNumRequest",
+      "request": {
+        "method": "GET",
+        "header": []
+      },
+      "response": []
+    },
+    {
+      "name": "getNumPrototype",
+      "request": {
+        "method": "GET",
+        "header": []
       },
       "response": []
     }
