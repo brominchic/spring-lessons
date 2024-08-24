@@ -8,6 +8,7 @@ import com.example.spring.model.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.client.RestTemplate;
 
 @Configuration
 public class ApplicationConfig {
@@ -31,6 +32,11 @@ public class ApplicationConfig {
     @Scope("prototype")
     public NumGetterPrototype numGetterPrototype() {
         return new NumGetterPrototype();
+    }
+
+    @Bean(value = "restTemplate")
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
 }
