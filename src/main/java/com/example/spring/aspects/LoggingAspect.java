@@ -1,7 +1,7 @@
 package com.example.spring.aspects;
 
-import com.example.spring.component.TaskProcessor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -13,18 +13,20 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class LoggingAspect {
 
-    @Pointcut("target(target)")
-    public void logTaskProcessor(TaskProcessor target) {
+    @Pointcut("within(com.example.spring.component.TaskProcessor+)")
+    public void logTaskProcessor() {
     }
 
-    @Before("logTaskProcessor(target)")
-    public void beforeLogTaskProcessor(TaskProcessor target) {
-        log.info("Вызван {}", target.getClass().getName());
+    @Before("logTaskProcessor()")
+    public void beforeLogTaskProcessor(JoinPoint joinPoint) {
+        log.info("Requested {}", joinPoint.getArgs());
+        log.info("Requested {}", joinPoint.getKind());
+        log.info("Requested {}", joinPoint.getSignature());
     }
 
-    @After("logTaskProcessor(target)")
-    public void afterLogTaskProcessor(TaskProcessor target) {
-        log.info("отработал {}", target.getClass().getName());
+    @After("logTaskProcessor()")
+    public void afterLogTaskProcessor(JoinPoint joinPoint) {
+        log.info("Finished {}", joinPoint.getTarget().getClass().getName());
     }
 
 

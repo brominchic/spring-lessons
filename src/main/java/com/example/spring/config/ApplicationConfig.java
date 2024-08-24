@@ -7,9 +7,11 @@ import com.example.spring.component.TaskProcessor;
 import com.example.spring.model.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Scope;
 
 @Configuration
+@EnableAspectJAutoProxy
 public class ApplicationConfig {
 
     @Bean
