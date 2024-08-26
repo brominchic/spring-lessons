@@ -19,9 +19,7 @@ public class LoggingAspect {
 
     @Before("logTaskProcessor()")
     public void beforeLogTaskProcessor(JoinPoint joinPoint) {
-        log.info("Requested {}", joinPoint.getArgs());
-        log.info("Requested {}", joinPoint.getKind());
-        log.info("Requested {}", joinPoint.getSignature());
+        log.info("Requested {}\n {}\n {}", joinPoint.getArgs(), joinPoint.getKind(), joinPoint.getSignature());
     }
 
     @After("logTaskProcessor()")
