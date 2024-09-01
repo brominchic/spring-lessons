@@ -31,6 +31,6 @@ public class SettingEntity {
     @JoinTable(name = "operations_applied_settings",
             joinColumns = @JoinColumn(name = "setting_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "operation_id", referencedColumnName = "id"))
-    private Set<OperationEntity> operations = new HashSet<OperationEntity>();
+    private Set<OperationMyEntity> operations = new HashSet<OperationMyEntity>();
 
 }

@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OperationEntity {
+public class OperationMyEntity {
     @Id
     private Long id;
 

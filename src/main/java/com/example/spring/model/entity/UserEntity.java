@@ -27,7 +27,7 @@ public class UserEntity {
     private Long totalBalance;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "number", cascade = CascadeType.ALL)
-    private List<AccountEntity> accountEntityList = new ArrayList<>();
+    private List<AccountMyEntity> accountEntityList = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "users_settings",

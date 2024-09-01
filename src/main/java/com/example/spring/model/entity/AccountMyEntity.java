@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountEntity {
+public class AccountMyEntity {
 
     @Id
     private Long number;

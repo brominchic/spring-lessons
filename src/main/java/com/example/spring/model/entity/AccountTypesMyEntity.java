@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountTypesEntity {
+public class AccountTypesMyEntity {
 
     @Id
     private Long id;

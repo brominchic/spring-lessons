@@ -1,6 +1,6 @@
 package com.example.spring.model.dto;
 
-import com.example.spring.model.entity.OperationEntity;
+import com.example.spring.model.entity.OperationMyEntity;
 import com.example.spring.model.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +18,7 @@ public class SettingDto {
 
     private final Set<UserEntity> users = new HashSet<UserEntity>();
 
-    private final Set<OperationEntity> operations = new HashSet<OperationEntity>();
+    private final Set<OperationMyEntity> operations = new HashSet<OperationMyEntity>();
 
     private Long id;
 
