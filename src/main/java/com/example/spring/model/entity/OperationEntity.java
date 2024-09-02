@@ -13,7 +13,9 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OperationMyEntity {
+public class OperationEntity {
+
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
 
@@ -35,4 +37,11 @@ public class OperationMyEntity {
             inverseJoinColumns = @JoinColumn(name = "setting_id", referencedColumnName = "id"))
     private Set<SettingEntity> settings = new HashSet<SettingEntity>();
 
+    public OperationEntity(Long fromAccount, Long id, Long toAccount, Long sum, String comment) {
+        this.fromAccount = fromAccount;
+        this.id = id;
+        this.toAccount = toAccount;
+        this.sum = sum;
+        this.comment = comment;
+    }
 }

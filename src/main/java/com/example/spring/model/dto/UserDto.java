@@ -1,29 +1,19 @@
 package com.example.spring.model.dto;
 
-import com.example.spring.model.entity.AccountMyEntity;
-import com.example.spring.model.entity.SettingEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto {
+public class UserDto implements Dto {
     private Long id;
 
     private String fullName;
 
     private Long totalBalance;
 
-    private List<AccountMyEntity> accountEntityList = new ArrayList<>();
-
-    private Set<SettingEntity> settings = new HashSet<SettingEntity>();
 }

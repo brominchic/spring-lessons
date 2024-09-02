@@ -15,6 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class SettingEntity {
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
 
@@ -31,6 +32,10 @@ public class SettingEntity {
     @JoinTable(name = "operations_applied_settings",
             joinColumns = @JoinColumn(name = "setting_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "operation_id", referencedColumnName = "id"))
-    private Set<OperationMyEntity> operations = new HashSet<OperationMyEntity>();
+    private Set<OperationEntity> operations = new HashSet<OperationEntity>();
 
+    public SettingEntity(String name, Long id) {
+        this.name = name;
+        this.id = id;
+    }
 }

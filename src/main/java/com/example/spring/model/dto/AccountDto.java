@@ -1,6 +1,5 @@
 package com.example.spring.model.dto;
 
-import com.example.spring.model.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,14 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AccountDto {
+public class AccountDto implements Dto {
 
     private Long number;
 
     private Long balance;
 
     private Long type;
-
-    private UserEntity userEntity;
 
 }

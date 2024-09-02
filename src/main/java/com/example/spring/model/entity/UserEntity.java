@@ -27,11 +27,17 @@ public class UserEntity {
     private Long totalBalance;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "number", cascade = CascadeType.ALL)
-    private List<AccountMyEntity> accountEntityList = new ArrayList<>();
+    private List<AccountEntity> accountEntityList = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "users_settings",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "setting_id", referencedColumnName = "id"))
     private Set<SettingEntity> settings = new HashSet<SettingEntity>();
+
+    public UserEntity(Long id, String fullName, Long totalBalance) {
+        this.id = id;
+        this.fullName = fullName;
+        this.totalBalance = totalBalance;
+    }
 }
