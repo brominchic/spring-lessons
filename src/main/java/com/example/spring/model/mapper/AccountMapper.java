@@ -2,10 +2,9 @@ package com.example.spring.model.mapper;
 
 import com.example.spring.model.dto.AccountDto;
 import com.example.spring.model.entity.AccountEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
-
+@Component
 public class AccountMapper implements Mapper<AccountDto, AccountEntity> {
     @Override
     public AccountDto entityToDto(AccountEntity entity) {

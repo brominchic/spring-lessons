@@ -22,7 +22,7 @@ public class AccountEntity {
     @Column(name = "type")
     private Long type;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 

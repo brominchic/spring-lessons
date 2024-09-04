@@ -2,9 +2,9 @@ package com.example.spring.model.mapper;
 
 import com.example.spring.model.dto.UserDto;
 import com.example.spring.model.entity.UserEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class UserMapper implements Mapper<UserDto, UserEntity> {
     public UserDto entityToDto(UserEntity userEntity) {
         return UserDto.builder().

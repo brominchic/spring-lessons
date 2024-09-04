@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SettingDto implements Dto {
+public class SettingDto {
 
     private Long id;
 
