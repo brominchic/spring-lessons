@@ -37,11 +37,13 @@ public class SettingCrudJpaComponent implements CrudJpaComponent<SettingDto> {
     }
 
     @Override
-    public void create(SettingDto settingDto) {
-        repository.save(mapper.dtoToEntity(settingDto));
+    public void create(HttpServletRequest request) throws IOException {
+        Scanner scanner = new Scanner(request.getInputStream(), StandardCharsets.UTF_8);
+        String jsonData = scanner.useDelimiter("\\A").next();
+        scanner.close();
+        repository.save(mapper.dtoToEntity(mapper.stringToDto(jsonData)));
     }
 
-    @Override
     public void createBatch(HttpServletRequest request) throws IOException {
         Scanner scanner = new Scanner(request.getInputStream(), StandardCharsets.UTF_8);
         String jsonData = scanner.useDelimiter("\\A").next();

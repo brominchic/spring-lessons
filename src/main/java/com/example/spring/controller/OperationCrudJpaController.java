@@ -1,0 +1,47 @@
+package com.example.spring.controller;
+
+import com.example.spring.component.jpa.OperationCrudJpaComponent;
+import com.example.spring.model.dto.OperationDto;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+import java.util.List;
+
+@RestController
+@RequestMapping("/jpa")
+@RequiredArgsConstructor
+public class OperationCrudJpaController implements CrudJpaController {
+    @Autowired
+    OperationCrudJpaComponent jpaComponent;
+
+    @GetMapping("/operations/all")
+    public List<OperationDto> getAll() {
+        return jpaComponent.getAll();
+    }
+
+    @PostMapping("/operations/create")
+    public void create(HttpServletRequest request) {
+        try {
+            jpaComponent.create(request);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @PostMapping("/operations/create/batch")
+    public void createBatch(HttpServletRequest request) {
+        try {
+            jpaComponent.createBatch(request);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+}

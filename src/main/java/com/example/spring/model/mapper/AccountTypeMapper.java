@@ -2,6 +2,8 @@ package com.example.spring.model.mapper;
 
 import com.example.spring.model.dto.AccountTypeDto;
 import com.example.spring.model.entity.AccountTypeEntity;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,6 +17,14 @@ public class AccountTypeMapper implements Mapper<AccountTypeDto, AccountTypeEnti
 
     @Override
     public AccountTypeEntity dtoToEntity(AccountTypeDto dto) {
-        return new AccountTypeEntity(dto.getId(), dto.getName());
+        return AccountTypeEntity.builder().
+                name(dto.getName()).
+                id(dto.getId()).build();
+    }
+
+    @Override
+    public AccountTypeDto stringToDto(String string) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(string, AccountTypeDto.class);
     }
 }

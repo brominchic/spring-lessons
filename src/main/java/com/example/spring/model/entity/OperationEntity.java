@@ -2,6 +2,7 @@ package com.example.spring.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,9 +14,9 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class OperationEntity {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long id;
 
@@ -37,11 +38,4 @@ public class OperationEntity {
             inverseJoinColumns = @JoinColumn(name = "setting_id", referencedColumnName = "id"))
     private Set<SettingEntity> settings = new HashSet<SettingEntity>();
 
-    public OperationEntity(Long fromAccount, Long id, Long toAccount, Long sum, String comment) {
-        this.fromAccount = fromAccount;
-        this.id = id;
-        this.toAccount = toAccount;
-        this.sum = sum;
-        this.comment = comment;
-    }
 }

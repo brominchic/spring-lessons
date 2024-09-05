@@ -11,7 +11,7 @@ public interface CrudJpaComponent<D> {
 
     List<D> getAll();
 
-    void create(D dto);
+    void create(HttpServletRequest request) throws IOException;
 
     void createBatch(HttpServletRequest request) throws IOException;
 }

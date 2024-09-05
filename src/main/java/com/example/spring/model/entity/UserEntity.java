@@ -2,6 +2,7 @@ package com.example.spring.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,6 +16,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserEntity {
 
     @Id
@@ -35,9 +37,5 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "setting_id", referencedColumnName = "id"))
     private Set<SettingEntity> settings = new HashSet<SettingEntity>();
 
-    public UserEntity(Long id, String fullName, Long totalBalance) {
-        this.id = id;
-        this.fullName = fullName;
-        this.totalBalance = totalBalance;
-    }
+
 }

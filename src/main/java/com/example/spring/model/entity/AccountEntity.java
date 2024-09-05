@@ -2,6 +2,7 @@ package com.example.spring.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,9 +11,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class AccountEntity {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     private Long number;
 
@@ -26,9 +27,4 @@ public class AccountEntity {
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 
-    public AccountEntity(Long number, Long balance, Long type) {
-        this.number = number;
-        this.balance = balance;
-        this.type = type;
-    }
 }
