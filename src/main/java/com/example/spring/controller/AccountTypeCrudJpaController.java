@@ -11,33 +11,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Scanner;
 
 @RestController
-@RequestMapping("/jpa")
+@RequestMapping("/jpa/account-types")
 @RequiredArgsConstructor
 public class AccountTypeCrudJpaController implements CrudJpaController {
     @Autowired
     AccountTypeCrudJpaComponent jpaComponent;
 
-    @GetMapping("/account-types/all")
+    @GetMapping("/all")
     public List<AccountTypeDto> getAll() {
         return jpaComponent.getAll();
     }
 
-    @PostMapping("/account-types/create")
-    public void create(HttpServletRequest request) {
+    @PostMapping("/create")
+    public AccountTypeDto create(HttpServletRequest request) {
         try {
-            jpaComponent.create(request);
+            Scanner scanner = new Scanner(request.getInputStream(), StandardCharsets.UTF_8);
+            String jsonData = scanner.useDelimiter("\\A").next();
+            scanner.close();
+            return jpaComponent.create(jsonData);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @PostMapping("/account-types/create/batch")
-    public void createBatch(HttpServletRequest request) {
+    @PostMapping("/create/batch")
+    public List<AccountTypeDto> createBatch(HttpServletRequest request) {
         try {
-            jpaComponent.createBatch(request);
+            Scanner scanner = new Scanner(request.getInputStream(), StandardCharsets.UTF_8);
+            String jsonData = scanner.useDelimiter("\\A").next();
+            scanner.close();
+            return jpaComponent.createBatch(jsonData);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -5,6 +5,7 @@ import com.example.spring.component.NumGetterPrototype;
 import com.example.spring.component.SoutTaskProcessor;
 import com.example.spring.component.TaskProcessor;
 import com.example.spring.model.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -39,6 +40,11 @@ public class ApplicationConfig {
     @Bean(value = "restTemplate")
     public RestTemplate restTemplate() {
         return new RestTemplate();
+    }
+
+    @Bean(value = "objectMapper")
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
     }
 
 }

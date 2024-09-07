@@ -1,6 +1,5 @@
 package com.example.spring.component.jpa;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -11,7 +10,7 @@ public interface CrudJpaComponent<D> {
 
     List<D> getAll();
 
-    void create(HttpServletRequest request) throws IOException;
+    D create(String jsonData) throws IOException;
 
-    void createBatch(HttpServletRequest request) throws IOException;
+    List<D> createBatch(String jsonData) throws IOException;
 }

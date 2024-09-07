@@ -11,33 +11,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Scanner;
 
 @RestController
-@RequestMapping("/jpa")
+@RequestMapping("/jpa/settings")
 @RequiredArgsConstructor
 public class SettingCrudJpaController implements CrudJpaController {
     @Autowired
     SettingCrudJpaComponent jpaComponent;
 
-    @GetMapping("/settings/all")
+    @GetMapping("/all")
     public List<SettingDto> getAll() {
         return jpaComponent.getAll();
     }
 
-    @PostMapping("/settings/create")
-    public void create(HttpServletRequest request) {
+    @PostMapping("/create")
+    public SettingDto create(HttpServletRequest request) {
         try {
-            jpaComponent.create(request);
+            Scanner scanner = new Scanner(request.getInputStream(), StandardCharsets.UTF_8);
+            String jsonData = scanner.useDelimiter("\\A").next();
+            scanner.close();
+            return jpaComponent.create(jsonData);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    @PostMapping("/settings/create/batch")
-    public void createBatch(HttpServletRequest request) {
+    @PostMapping("/create/batch")
+    public List<SettingDto> createBatch(HttpServletRequest request) {
         try {
-            jpaComponent.createBatch(request);
+            Scanner scanner = new Scanner(request.getInputStream(), StandardCharsets.UTF_8);
+            String jsonData = scanner.useDelimiter("\\A").next();
+            scanner.close();
+            return jpaComponent.createBatch(jsonData);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
