@@ -1,17 +1,15 @@
 package com.example.spring.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-
 import java.io.IOException;
 import java.util.List;
 
 
 public interface CrudJpaController<D> {
 
-    List getAll();
+    List<D> getAll();
 
-    D create(HttpServletRequest request) throws IOException;
+    D create(D input) throws IOException;
 
-    List<D> createBatch(HttpServletRequest request);
+    List<D> createBatch(List<D> input);
 
 }

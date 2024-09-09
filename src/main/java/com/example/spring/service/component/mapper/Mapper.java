@@ -1,9 +1,7 @@
-package com.example.spring.model.mapper;
+package com.example.spring.service.component.mapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public interface Mapper<D, E> {
@@ -13,7 +11,4 @@ public interface Mapper<D, E> {
 
     D stringToDto(String string) throws JsonProcessingException;
 
-    List<D> listStringToListDto(String string) throws JsonProcessingException;
-
-    List<E> listStringToListEntity(String string) throws JsonProcessingException;
 }

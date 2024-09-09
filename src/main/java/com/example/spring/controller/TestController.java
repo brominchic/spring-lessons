@@ -1,10 +1,14 @@
 package com.example.spring.controller;
 
-import com.example.spring.component.*;
 import com.example.spring.config.ApplicationConfig;
 import com.example.spring.model.TaskInput;
 import com.example.spring.model.TaskOutput;
 import com.example.spring.model.User;
+import com.example.spring.service.NumGetterPrototype;
+import com.example.spring.service.TaskProcessorService;
+import com.example.spring.service.component.NumGetterRequest;
+import com.example.spring.service.component.RestCallerComponent;
+import com.example.spring.service.component.TestComponent;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

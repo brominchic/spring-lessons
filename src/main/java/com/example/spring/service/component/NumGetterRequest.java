@@ -1,4 +1,4 @@
-package com.example.spring.component;
+package com.example.spring.service.component;
 
 
 import lombok.extern.slf4j.Slf4j;

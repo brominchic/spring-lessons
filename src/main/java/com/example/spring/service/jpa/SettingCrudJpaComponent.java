@@ -1,9 +1,9 @@
-package com.example.spring.component.jpa;
+package com.example.spring.service.jpa;
 
 import com.example.spring.model.dto.SettingDto;
 import com.example.spring.model.entity.SettingEntity;
-import com.example.spring.model.mapper.SettingMapper;
 import com.example.spring.repositories.SettingRepository;
+import com.example.spring.service.component.mapper.SettingMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,15 +32,20 @@ public class SettingCrudJpaComponent implements CrudJpaComponent<SettingDto> {
     }
 
     @Override
-    public SettingDto create(String jsonData) throws IOException {
-        SettingDto dto = mapper.stringToDto(jsonData);
-        repository.save(mapper.dtoToEntity(dto));
-        return dto;
+    public SettingDto create(SettingDto dto) throws IOException {
+        return mapper.entityToDto(repository.save(mapper.dtoToEntity(dto)));
     }
 
-    public List<SettingDto> createBatch(String jsonData) throws IOException {
-        List<SettingEntity> entityList = mapper.listStringToListEntity(jsonData);
-        repository.saveAll(entityList);
-        return mapper.listStringToListDto(jsonData);
+    @Override
+    public List<SettingDto> createBatch(List<SettingDto> dList) {
+        List<SettingEntity> entityList = new ArrayList<>();
+        for (SettingDto dto : dList) {
+            entityList.add(mapper.dtoToEntity(dto));
+        }
+        List<SettingDto> result = new ArrayList<>();
+        for (SettingEntity entity : repository.saveAll(entityList)) {
+            result.add(mapper.entityToDto(entity));
+        }
+        return result;
     }
 }

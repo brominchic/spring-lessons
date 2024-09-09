@@ -1,24 +1,18 @@
 package com.example.spring.controller;
 
-import com.example.spring.component.jpa.SettingCrudJpaComponent;
 import com.example.spring.model.dto.SettingDto;
-import jakarta.servlet.http.HttpServletRequest;
+import com.example.spring.service.jpa.SettingCrudJpaComponent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Scanner;
 
 @RestController
 @RequestMapping("/jpa/settings")
 @RequiredArgsConstructor
-public class SettingCrudJpaController implements CrudJpaController {
+public class SettingCrudJpaController implements CrudJpaController<SettingDto> {
     @Autowired
     SettingCrudJpaComponent jpaComponent;
 
@@ -28,28 +22,12 @@ public class SettingCrudJpaController implements CrudJpaController {
     }
 
     @PostMapping("/create")
-    public SettingDto create(HttpServletRequest request) {
-        try {
-            Scanner scanner = new Scanner(request.getInputStream(), StandardCharsets.UTF_8);
-            String jsonData = scanner.useDelimiter("\\A").next();
-            scanner.close();
-            return jpaComponent.create(jsonData);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public SettingDto create(@RequestBody SettingDto input) throws IOException {
+        return jpaComponent.create(input);
     }
 
     @PostMapping("/create/batch")
-    public List<SettingDto> createBatch(HttpServletRequest request) {
-        try {
-            Scanner scanner = new Scanner(request.getInputStream(), StandardCharsets.UTF_8);
-            String jsonData = scanner.useDelimiter("\\A").next();
-            scanner.close();
-            return jpaComponent.createBatch(jsonData);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public List<SettingDto> createBatch(@RequestBody List<SettingDto> input) {
+        return jpaComponent.createBatch(input);
     }
-
-
 }

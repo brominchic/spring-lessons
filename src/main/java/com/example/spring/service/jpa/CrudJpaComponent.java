@@ -1,4 +1,4 @@
-package com.example.spring.component.jpa;
+package com.example.spring.service.jpa;
 
 import org.springframework.stereotype.Component;
 
@@ -10,7 +10,7 @@ public interface CrudJpaComponent<D> {
 
     List<D> getAll();
 
-    D create(String jsonData) throws IOException;
+    D create(D dto) throws IOException;
 
-    List<D> createBatch(String jsonData) throws IOException;
+    List<D> createBatch(List<D> dList);
 }

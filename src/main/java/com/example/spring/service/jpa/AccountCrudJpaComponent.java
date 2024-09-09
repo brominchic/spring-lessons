@@ -1,9 +1,9 @@
-package com.example.spring.component.jpa;
+package com.example.spring.service.jpa;
 
 import com.example.spring.model.dto.AccountDto;
 import com.example.spring.model.entity.AccountEntity;
-import com.example.spring.model.mapper.AccountMapper;
 import com.example.spring.repositories.AccountRepository;
+import com.example.spring.service.component.mapper.AccountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,15 +32,20 @@ public class AccountCrudJpaComponent implements CrudJpaComponent<AccountDto> {
     }
 
     @Override
-    public AccountDto create(String jsonData) throws IOException {
-        AccountDto dto = mapper.stringToDto(jsonData);
-        repository.save(mapper.dtoToEntity(dto));
-        return dto;
+    public AccountDto create(AccountDto dto) throws IOException {
+        return mapper.entityToDto(repository.save(mapper.dtoToEntity(dto)));
     }
 
-    public List<AccountDto> createBatch(String jsonData) throws IOException {
-        List<AccountEntity> entityList = mapper.listStringToListEntity(jsonData);
-        repository.saveAll(entityList);
-        return mapper.listStringToListDto(jsonData);
+    @Override
+    public List<AccountDto> createBatch(List<AccountDto> dList) {
+        List<AccountEntity> entityList = new ArrayList<>();
+        for (AccountDto dto : dList) {
+            entityList.add(mapper.dtoToEntity(dto));
+        }
+        List<AccountDto> result = new ArrayList<>();
+        for (AccountEntity entity : repository.saveAll(entityList)) {
+            result.add(mapper.entityToDto(entity));
+        }
+        return result;
     }
 }
