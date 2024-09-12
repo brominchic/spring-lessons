@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:49385/postgres
+    username: postgres
+    password: postgres
+    driverClassName: orq.postgresql.Driver
