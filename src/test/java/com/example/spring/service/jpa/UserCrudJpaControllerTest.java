@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -35,7 +36,7 @@ class UserCrudJpaControllerTest extends SpringBootApplicationTest {
     @Transactional
         // откатит все изменения сделанные в тесте
     void getTest() throws Exception {
-        ArrayList<UserEntity> userEntities = new ArrayList<>();
+        List<UserEntity> userEntities = new ArrayList<>();
         userEntities.add(UserEntity.builder().
                 id(1L).
                 fullName("dva").
