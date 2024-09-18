@@ -48,4 +48,5 @@ public class UserCrudJpaComponent implements CrudJpaComponent<UserDto> {
         }
         return result;
     }
+
 }

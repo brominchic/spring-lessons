@@ -1,11 +1,17 @@
 package com.example.spring.service.component;
 
+import com.example.spring.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
 @Scope("prototype")
 public class TestComponent {
+
+    @Autowired
+    private UserRepository userRepository;
+
 
     public String getPage(String firstname, String lastname) {
         return "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n" +
