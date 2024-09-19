@@ -1,4 +1,4 @@
-package com.example.spring.component;
+package com.example.spring.service;
 
 import com.example.spring.model.TaskInput;
 import com.example.spring.model.TaskOutput;

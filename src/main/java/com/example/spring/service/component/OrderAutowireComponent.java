@@ -1,5 +1,6 @@
-package com.example.spring.component;
+package com.example.spring.service.component;
 
+import com.example.spring.service.TaskProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;

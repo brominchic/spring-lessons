@@ -1,10 +1,10 @@
 package com.example.spring.config;
 
-import com.example.spring.component.LogTaskProcessor;
-import com.example.spring.component.NumGetterPrototype;
-import com.example.spring.component.SoutTaskProcessor;
-import com.example.spring.component.TaskProcessor;
 import com.example.spring.model.User;
+import com.example.spring.service.LogTaskProcessor;
+import com.example.spring.service.NumGetterPrototype;
+import com.example.spring.service.SoutTaskProcessor;
+import com.example.spring.service.TaskProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
