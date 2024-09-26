@@ -27,12 +27,12 @@ public class SettingEntity {
     @JoinTable(name = "users_settings",
             joinColumns = @JoinColumn(name = "setting_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<UserEntity> users = new HashSet<>();
+    private Set<UserEntity> users;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "operations_applied_settings",
             joinColumns = @JoinColumn(name = "setting_id"),
             inverseJoinColumns = @JoinColumn(name = "operation_id"))
-    private Set<OperationEntity> operations = new HashSet<>();
+    private Set<OperationEntity> operations;
 
 }
