@@ -16,6 +16,7 @@ public class UserCrudJpaController implements CrudJpaController<UserDto> {
     @Autowired
     UserCrudJpaComponent jpaComponent;
 
+
     @GetMapping("/all")
     public List<UserDto> getAll() {
         return jpaComponent.getAll();

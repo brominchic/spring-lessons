@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +28,7 @@ public class UserEntity {
     private Long totalBalance;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "number", cascade = CascadeType.ALL)
-    private List<AccountEntity> accountEntityList = new ArrayList<>();
+    private List<AccountEntity> accountEntityList;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "users_settings",

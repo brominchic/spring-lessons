@@ -20,11 +20,13 @@ public class OperationEntity {
     @Id
     private Long id;
 
-    @Column(name = "from_account")
-    private Long fromAccount;
+    @ManyToOne
+    @JoinColumn(name = "from_account")
+    private AccountEntity fromAccount;
 
-    @Column(name = "to_account")
-    private Long toAccount;
+    @ManyToOne
+    @JoinColumn(name = "to_account")
+    private AccountEntity toAccount;
 
     @Column(name = "sum")
     private Long sum;
@@ -34,8 +36,8 @@ public class OperationEntity {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "operations_applied_settings",
-            joinColumns = @JoinColumn(name = "operation_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "setting_id", referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "operation_id"),
+            inverseJoinColumns = @JoinColumn(name = "setting_id"))
     private Set<SettingEntity> settings = new HashSet<SettingEntity>();
 
 }

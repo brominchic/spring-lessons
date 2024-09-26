@@ -25,14 +25,14 @@ public class SettingEntity {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "users_settings",
-            joinColumns = @JoinColumn(name = "setting_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "setting_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<UserEntity> users = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "operations_applied_settings",
-            joinColumns = @JoinColumn(name = "setting_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "operation_id", referencedColumnName = "id"))
+            joinColumns = @JoinColumn(name = "setting_id"),
+            inverseJoinColumns = @JoinColumn(name = "operation_id"))
     private Set<OperationEntity> operations = new HashSet<>();
 
 }

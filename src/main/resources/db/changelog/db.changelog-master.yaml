@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/changelogs/initial-schema.sql
+  - include:
+      file: db/changelog/changelogs/new-constraint.sql

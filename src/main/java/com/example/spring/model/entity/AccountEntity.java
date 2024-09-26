@@ -20,10 +20,11 @@ public class AccountEntity {
     @Column(name = "balance")
     private Long balance;
 
-    @Column(name = "type")
-    private Long type;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "type")
+    private AccountTypeEntity accountTypeEntity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity userEntity;
 

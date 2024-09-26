@@ -3,8 +3,9 @@ package com.example.spring.service.jpa;
 import com.example.spring.model.dto.AccountDto;
 import com.example.spring.model.entity.AccountEntity;
 import com.example.spring.repositories.AccountRepository;
+import com.example.spring.repositories.UserRepository;
 import com.example.spring.service.component.mapper.AccountMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -12,13 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class AccountCrudJpaComponent implements CrudJpaComponent<AccountDto> {
 
-    @Autowired
-    AccountMapper mapper;
-    @Autowired
-    AccountRepository repository;
-
+    private final AccountMapper mapper;
+    private final AccountRepository repository;
+    private final UserRepository userRepository;
 
     @Override
     public List<AccountDto> getAll() {
@@ -33,6 +33,17 @@ public class AccountCrudJpaComponent implements CrudJpaComponent<AccountDto> {
 
     @Override
     public AccountDto create(AccountDto dto) throws IOException {
+        var newAccount = mapper.dtoToEntity(dto);
+        if (dto.getUserId() != null) {
+            var user = userRepository.findById(dto.getUserId()).orElseThrow();
+            if (user.getAccountEntityList() == null) {
+                user.setAccountEntityList(new ArrayList<>());
+            }
+            user.getAccountEntityList().add(newAccount);
+            newAccount.setUserEntity(user);
+            user = userRepository.save(user);
+            System.out.println();
+        }
         return mapper.entityToDto(repository.save(mapper.dtoToEntity(dto)));
     }
 
