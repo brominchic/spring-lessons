@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +15,8 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@NamedEntityGraph(name = "client_entity-graph", attributeNodes = @NamedAttributeNode("accountEntityList"))
+
 public class UserEntity {
 
     @Id
@@ -27,7 +28,7 @@ public class UserEntity {
     @Column(name = "total_balance")
     private Long totalBalance;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "number", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "number", cascade = CascadeType.ALL)
     private List<AccountEntity> accountEntityList;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

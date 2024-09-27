@@ -4,8 +4,6 @@ import com.example.spring.config.ApplicationConfig;
 import com.example.spring.model.TaskInput;
 import com.example.spring.model.TaskOutput;
 import com.example.spring.model.User;
-import com.example.spring.model.entity.UserEntity;
-import com.example.spring.repositories.UserOptimizedRepository;
 import com.example.spring.repositories.UserRepository;
 import com.example.spring.service.NumGetterPrototype;
 import com.example.spring.service.TaskProcessorService;
@@ -30,14 +28,14 @@ public class TestController {
     private final TaskProcessorService taskProcessorService;
     private final NumGetterRequest numGetterRequest;
     private final RestCallerComponent restCallerComponent;
-    private final UserOptimizedRepository userOptimizedRepository;
     private final UserRepository repository;
 
     @PostMapping
-    public UserEntity getMain(@RequestBody User user, HttpServletRequest request) {
+    public String getMain(@RequestBody User user, HttpServletRequest request) {
         log.info("request url is {}", request.getRequestURI());
-
-        return userOptimizedRepository.findUserWithAccountsAndAccountTypes(1L);
+        var yy = repository.findUserById(1L);
+        System.out.println("1");
+        return "1";
     }
 
     @PostMapping("/process")
