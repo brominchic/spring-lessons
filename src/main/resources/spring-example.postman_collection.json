@@ -1,587 +1,337 @@
 {
-  "info": {
-    "_postman_id": "c2a22c3e-2c62-4bce-bb09-0c67ec2a03c7",
-    "name": "spring-example",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "37112199"
-  },
-  "item": [
-    {
-      "name": "post-main",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"firstname\": \"brom\",\r\n    \"lastname\": \"nebrom\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:9999/main",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "9999",
-          "path": [
-            "main"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "pathVariable",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/main/brom/titanovich",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "main",
-            "brom",
-            "titanovich"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "RequestParam",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/main?firstname=123&lastname=123",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "main"
-          ],
-          "query": [
-            {
-              "key": "firstname",
-              "value": "123"
-            },
-            {
-              "key": "lastname",
-              "value": "123"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "process",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"taskType\": \"logTaskProcessor\",\r\n    \"taskId\": \"1\",\r\n    \"input\": \"nebrom\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/example-application/main/process",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "main",
-            "process"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "getNumRequest",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/example-application/main/num/request",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "main",
-            "num",
-            "request"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "getNumPrototype",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/example-application/main/num/prototype",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "main",
-            "num",
-            "prototype"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "getAllUsers",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/example-application/jpa/users/all",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "jpa",
-            "users",
-            "all"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "getAllAccounts",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/example-application/jpa/accounts/all",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "jpa",
-            "accounts",
-            "all"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "getAllAccountsType",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/example-application/jpa/account-types/all",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "jpa",
-            "account-types",
-            "all"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "getAllSettings",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/example-application/jpa/settings/all",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "jpa",
-            "settings",
-            "all"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "getAllOperations",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:8080/example-application/jpa/operations/all",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "jpa",
-            "operations",
-            "all"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "createUser",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": " {\r\n    \"id\": 1,\r\n    \"fullName\": \"brom\",\r\n    \"totalBalance\": 1\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/example-application/jpa/users/create",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "jpa",
-            "users",
-            "create"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "createAccount",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"number\": 1,\r\n    \"balance\": 2518,\r\n    \"type\": 1\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/example-application/jpa/accounts/create",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "jpa",
-            "accounts",
-            "create"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "createAccountType",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n        \"id\": 1,\r\n        \"name\": 1\r\n    }",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/example-application/jpa/account-types/create",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "jpa",
-            "account-types",
-            "create"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "createSetting",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n        \"id\": 4,\r\n        \"name\": \"1\"\r\n    }",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/example-application/jpa/settings/create",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "jpa",
-            "settings",
-            "create"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "createOperation",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "\r\n    {\r\n        \"id\": 3,\r\n        \"fromAccount\": 1,\r\n        \"toAccount\": 2,\r\n        \"sum\": 0,\r\n        \"comment\": \"rrr\"\r\n    }\r\n",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/example-application/jpa/operations/create",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "jpa",
-            "operations",
-            "create"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "createUserBatch",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "[ {\r\n        \"id\": 1,\r\n        \"fullName\": \"test\",\r\n        \"totalBalance\": 1\r\n    },\r\n    {\r\n        \"id\": 6,\r\n        \"fullName\": \"test\",\r\n        \"totalBalance\": 0\r\n    },\r\n    {\r\n        \"id\": 3,\r\n        \"fullName\": \"test\",\r\n        \"totalBalance\": 0\r\n    }\r\n]",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/example-application/jpa/users/create/batch",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "jpa",
-            "users",
-            "create",
-            "batch"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "createAccountBatch",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "[\r\n    {\r\n        \"number\": 1,\r\n        \"balance\": 2518,\r\n        \"type\": 1\r\n    },\r\n    {\r\n        \"number\": 2,\r\n        \"balance\": 4650,\r\n        \"type\": 1\r\n    }\r\n]",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/example-application/jpa/accounts/create/batch",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "jpa",
-            "accounts",
-            "create",
-            "batch"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "createAccountTypeBatch",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "[\r\n    {\r\n        \"id\": 1,\r\n        \"name\": 1\r\n    },\r\n    {\r\n        \"id\": 4,\r\n        \"name\": 2\r\n    },\r\n    {\r\n        \"id\": 5,\r\n        \"name\": 2\r\n    },\r\n    {\r\n        \"id\": 6,\r\n        \"name\": 2\r\n    }\r\n]",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/example-application/jpa/account-types/create/batch",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "jpa",
-            "account-types",
-            "create",
-            "batch"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "createSettingBatch",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "[\r\n    {\r\n        \"id\": 6,\r\n        \"name\": \"2\"\r\n    },\r\n    {\r\n        \"id\": 7,\r\n        \"name\": \"1\"\r\n    }\r\n]",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/example-application/jpa/settings/create/batch",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "jpa",
-            "settings",
-            "create",
-            "batch"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "createOperationsBatch",
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "[\r\n    {\r\n        \"id\": 1,\r\n        \"fromAccount\": 1,\r\n        \"toAccount\": 2,\r\n        \"sum\": 0,\r\n        \"comment\": \"rrr\"\r\n    },\r\n    {\r\n        \"id\": 2,\r\n        \"fromAccount\": 1,\r\n        \"toAccount\": 2,\r\n        \"sum\": 0,\r\n        \"comment\": \"rrr\"\r\n    },\r\n    {\r\n        \"id\": 3,\r\n        \"fromAccount\": 1,\r\n        \"toAccount\": 2,\r\n        \"sum\": 0,\r\n        \"comment\": \"rrr\"\r\n    }\r\n]",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/example-application/jpa/operations/create/batch",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "example-application",
-            "jpa",
-            "operations",
-            "create",
-            "batch"
-          ]
-        }
-      },
-      "response": []
-    }
-  ]
+	"info": {
+		"_postman_id": "c2a22c3e-2c62-4bce-bb09-0c67ec2a03c7",
+		"name": "spring-example",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "37112199"
+	},
+	"item": [
+		{
+			"name": "post-main",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"brom\",\r\n    \"lastname\": \"nebrom\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:9999/example-application/main"
+			},
+			"response": []
+		},
+		{
+			"name": "pathVariable",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9999/example-application/main/brom/titanovich"
+			},
+			"response": []
+		},
+		{
+			"name": "RequestParam",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/example-application/main?firstname=123&lastname=123",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"example-application",
+						"main"
+					],
+					"query": [
+						{
+							"key": "firstname",
+							"value": "123"
+						},
+						{
+							"key": "lastname",
+							"value": "123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "process",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"taskType\": \"logTaskProcessor\",\r\n    \"taskId\": \"1\",\r\n    \"input\": \"nebrom\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/example-application/main/process"
+			},
+			"response": []
+		},
+		{
+			"name": "getNumRequest",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/example-application/main/num/request"
+			},
+			"response": []
+		},
+		{
+			"name": "getNumPrototype",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/example-application/main/num/prototype"
+			},
+			"response": []
+		},
+		{
+			"name": "getUserById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:9999/example-application/jpa/users/getById/2"
+			},
+			"response": []
+		},
+		{
+			"name": "getAllUsers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/example-application/jpa/users/all"
+			},
+			"response": []
+		},
+		{
+			"name": "getAllAccounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/example-application/jpa/accounts/all"
+			},
+			"response": []
+		},
+		{
+			"name": "getAllAccountsType",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/example-application/jpa/account-types/all"
+			},
+			"response": []
+		},
+		{
+			"name": "getAllSettings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/example-application/jpa/settings/all"
+			},
+			"response": []
+		},
+		{
+			"name": "getAllOperations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8080/example-application/jpa/operations/all"
+			},
+			"response": []
+		},
+		{
+			"name": "createUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n    \"id\": 1,\r\n    \"fullName\": \"brom\",\r\n    \"totalBalance\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/example-application/jpa/users/create"
+			},
+			"response": []
+		},
+		{
+			"name": "createAccount",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"number\": 1,\r\n    \"balance\": 2518,\r\n    \"type\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/example-application/jpa/accounts/create"
+			},
+			"response": []
+		},
+		{
+			"name": "createAccountType",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 1,\r\n        \"name\": 1\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/example-application/jpa/account-types/create"
+			},
+			"response": []
+		},
+		{
+			"name": "createSetting",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": 4,\r\n        \"name\": \"1\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/example-application/jpa/settings/create"
+			},
+			"response": []
+		},
+		{
+			"name": "createOperation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n    {\r\n        \"id\": 3,\r\n        \"fromAccount\": 1,\r\n        \"toAccount\": 2,\r\n        \"sum\": 0,\r\n        \"comment\": \"rrr\"\r\n    }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/example-application/jpa/operations/create"
+			},
+			"response": []
+		},
+		{
+			"name": "createUserBatch",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[ {\r\n        \"id\": 1,\r\n        \"fullName\": \"test\",\r\n        \"totalBalance\": 1\r\n    },\r\n    {\r\n        \"id\": 6,\r\n        \"fullName\": \"test\",\r\n        \"totalBalance\": 0\r\n    },\r\n    {\r\n        \"id\": 3,\r\n        \"fullName\": \"test\",\r\n        \"totalBalance\": 0\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/example-application/jpa/users/create/batch"
+			},
+			"response": []
+		},
+		{
+			"name": "createAccountBatch",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"number\": 1,\r\n        \"balance\": 2518,\r\n        \"type\": 1\r\n    },\r\n    {\r\n        \"number\": 2,\r\n        \"balance\": 4650,\r\n        \"type\": 1\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/example-application/jpa/accounts/create/batch"
+			},
+			"response": []
+		},
+		{
+			"name": "createAccountTypeBatch",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"id\": 1,\r\n        \"name\": 1\r\n    },\r\n    {\r\n        \"id\": 4,\r\n        \"name\": 2\r\n    },\r\n    {\r\n        \"id\": 5,\r\n        \"name\": 2\r\n    },\r\n    {\r\n        \"id\": 6,\r\n        \"name\": 2\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/example-application/jpa/account-types/create/batch"
+			},
+			"response": []
+		},
+		{
+			"name": "createSettingBatch",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"id\": 6,\r\n        \"name\": \"2\"\r\n    },\r\n    {\r\n        \"id\": 7,\r\n        \"name\": \"1\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/example-application/jpa/settings/create/batch"
+			},
+			"response": []
+		},
+		{
+			"name": "createOperationsBatch",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"id\": 1,\r\n        \"fromAccount\": 1,\r\n        \"toAccount\": 2,\r\n        \"sum\": 0,\r\n        \"comment\": \"rrr\"\r\n    },\r\n    {\r\n        \"id\": 2,\r\n        \"fromAccount\": 1,\r\n        \"toAccount\": 2,\r\n        \"sum\": 0,\r\n        \"comment\": \"rrr\"\r\n    },\r\n    {\r\n        \"id\": 3,\r\n        \"fromAccount\": 1,\r\n        \"toAccount\": 2,\r\n        \"sum\": 0,\r\n        \"comment\": \"rrr\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:8080/example-application/jpa/operations/create/batch"
+			},
+			"response": []
+		}
+	]
 }
