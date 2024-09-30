@@ -4,6 +4,7 @@ import com.example.spring.config.ApplicationConfig;
 import com.example.spring.model.TaskInput;
 import com.example.spring.model.TaskOutput;
 import com.example.spring.model.User;
+import com.example.spring.model.dto.UserWithAccountsDto;
 import com.example.spring.repositories.UserRepository;
 import com.example.spring.service.NumGetterPrototype;
 import com.example.spring.service.TaskProcessorService;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
@@ -31,11 +33,10 @@ public class TestController {
     private final UserRepository repository;
 
     @PostMapping
-    public String getMain(@RequestBody User user, HttpServletRequest request) {
+    @Transactional
+    public UserWithAccountsDto getMain(@RequestBody User user, HttpServletRequest request) {
         log.info("request url is {}", request.getRequestURI());
-        var yy = repository.findUserById(1L);
-        System.out.println("1");
-        return "1";
+        return null;
     }
 
     @PostMapping("/process")
