@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @Slf4j
 public class ManyToManyTest extends SpringBootApplicationTest {
 
@@ -19,8 +21,7 @@ public class ManyToManyTest extends SpringBootApplicationTest {
 
     @Test
     @Transactional
-    void name() {
-
+    void manyToManyTest() {
         userRepository.save(
                 UserEntity.builder()
                         .id(1L)
@@ -42,14 +43,8 @@ public class ManyToManyTest extends SpringBootApplicationTest {
                         )
                         .build()
         );
-
-        log.info("and then go");
         var test = userRepository.findUserById(1L);
-
-//        var example = userRepository.findById(1L).orElseThrow();
-
-        System.out.println(1);
-//        assertEquals(example.getSettings().size(), 3);
+        assertEquals(test.getSettings().size(), 3);
 
     }
 }
