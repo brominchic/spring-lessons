@@ -3,19 +3,15 @@ package com.example.spring.controller;
 import com.example.spring.config.ApplicationConfig;
 import com.example.spring.model.TaskInput;
 import com.example.spring.model.TaskOutput;
-import com.example.spring.model.User;
-import com.example.spring.model.dto.UserWithAccountsDto;
 import com.example.spring.repositories.UserRepository;
 import com.example.spring.service.NumGetterPrototype;
 import com.example.spring.service.TaskProcessorService;
 import com.example.spring.service.component.NumGetterRequest;
 import com.example.spring.service.component.RestCallerComponent;
 import com.example.spring.service.component.TestComponent;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URISyntaxException;
@@ -31,13 +27,6 @@ public class TestController {
     private final NumGetterRequest numGetterRequest;
     private final RestCallerComponent restCallerComponent;
     private final UserRepository repository;
-
-    @PostMapping
-    @Transactional
-    public UserWithAccountsDto getMain(@RequestBody User user, HttpServletRequest request) {
-        log.info("request url is {}", request.getRequestURI());
-        return null;
-    }
 
     @PostMapping("/process")
     public TaskOutput doProcess(@RequestBody TaskInput taskInput) {

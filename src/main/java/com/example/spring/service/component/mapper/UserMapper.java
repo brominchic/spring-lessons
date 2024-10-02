@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +61,6 @@ public class UserMapper implements Mapper<UserDto, UserEntity> {
         return objectMapper.readValue(string, UserDto.class);
     }
 
-    @Transactional
     public UserWithAccountsDto entityToDtoWithAccounts(UserEntity userEntity) {
         ArrayList<AccountDto> accounts = new ArrayList<>();
         List<AccountEntity> entityList = userEntity.getAccountEntityList();

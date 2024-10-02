@@ -34,11 +34,13 @@ public class UserCrudJpaComponent implements CrudJpaComponent<UserDto> {
     }
 
     @Override
+    @Transactional
     public UserDto create(UserDto dto) throws IOException {
         return mapper.entityToDto(repository.save(mapper.dtoToEntity(dto)));
     }
 
     @Override
+    @Transactional
     public List<UserDto> createBatch(List<UserDto> dList) {
         List<UserEntity> entityList = new ArrayList<>();
         for (UserDto dto : dList) {

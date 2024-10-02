@@ -6,6 +6,7 @@ import com.example.spring.repositories.SettingRepository;
 import com.example.spring.service.component.mapper.SettingMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,11 +33,13 @@ public class SettingCrudJpaComponent implements CrudJpaComponent<SettingDto> {
     }
 
     @Override
+    @Transactional
     public SettingDto create(SettingDto dto) throws IOException {
         return mapper.entityToDto(repository.save(mapper.dtoToEntity(dto)));
     }
 
     @Override
+    @Transactional
     public List<SettingDto> createBatch(List<SettingDto> dList) {
         List<SettingEntity> entityList = new ArrayList<>();
         for (SettingDto dto : dList) {

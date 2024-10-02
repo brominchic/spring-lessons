@@ -15,8 +15,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@NamedEntityGraph(name = "client_entity-graph", attributeNodes = @NamedAttributeNode("accountEntityList"))
-
 public class UserEntity {
 
     @Id

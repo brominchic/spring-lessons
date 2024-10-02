@@ -2,8 +2,8 @@ package com.example.spring.service.component.mapper;
 
 import com.example.spring.config.ApplicationConfig;
 import com.example.spring.model.dto.OperationDto;
+import com.example.spring.model.entity.AccountEntity;
 import com.example.spring.model.entity.OperationEntity;
-import com.example.spring.repositories.AccountRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class OperationMapper implements Mapper<OperationDto, OperationEntity> {
-    private final AccountRepository accountRepository;
-
     public OperationDto entityToDto(OperationEntity operationEntity) {
         return OperationDto.builder().
                 id(operationEntity.getId()).
@@ -29,8 +27,15 @@ public class OperationMapper implements Mapper<OperationDto, OperationEntity> {
                 id(operationDto.getId()).
                 sum(operationDto.getSum()).
                 comment(operationDto.getComment()).
-                fromAccount(accountRepository.findById(operationDto.getFromAccount()).get()).
-                toAccount(accountRepository.findById(operationDto.getToAccount()).get()).build();
+                fromAccount(AccountEntity
+                        .builder()
+                        .number(operationDto.getFromAccount())
+                        .build()).
+                toAccount(AccountEntity
+                        .builder()
+                        .number(operationDto.getToAccount())
+                        .build())
+                .build();
     }
 
     @Override

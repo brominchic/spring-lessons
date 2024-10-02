@@ -17,7 +17,7 @@ public class UserCustomController {
     private final UserRepository repository;
     private final UserCrudJpaComponent component;
 
-    @GetMapping("getById/{id}")
+    @GetMapping("get/{id}/full")
     @Transactional //один запрос
     public UserWithAccountsDto getMain(@PathVariable Long id) {
         return component.getByIdWithAccounts(id);

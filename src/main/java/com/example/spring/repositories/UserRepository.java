@@ -12,5 +12,6 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
     UserEntity findUserWithAccountsAndAccountTypes(Long userId);
 
     @EntityGraph(attributePaths = "accountEntityList")
+        // с помощью этой аннотации JPA загружает все в одном запросе SELECT
     UserEntity findUserById(Long id);
 }

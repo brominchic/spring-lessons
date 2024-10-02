@@ -7,6 +7,7 @@ import com.example.spring.repositories.UserRepository;
 import com.example.spring.service.component.mapper.AccountMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class AccountCrudJpaComponent implements CrudJpaComponent<AccountDto> {
     }
 
     @Override
+    @Transactional
     public AccountDto create(AccountDto dto) throws IOException {
         var newAccount = mapper.dtoToEntity(dto);
         if (dto.getUserId() != null) {
@@ -48,6 +50,7 @@ public class AccountCrudJpaComponent implements CrudJpaComponent<AccountDto> {
     }
 
     @Override
+    @Transactional
     public List<AccountDto> createBatch(List<AccountDto> dList) {
         List<AccountEntity> entityList = new ArrayList<>();
         for (AccountDto dto : dList) {
