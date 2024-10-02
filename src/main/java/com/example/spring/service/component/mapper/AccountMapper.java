@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AccountMapper implements Mapper<AccountDto, AccountEntity> {
 
-
     @Override
     public AccountDto entityToDto(AccountEntity entity) {
         return AccountDto.builder().

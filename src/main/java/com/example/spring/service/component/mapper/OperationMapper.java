@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class OperationMapper implements Mapper<OperationDto, OperationEntity> {
+
     public OperationDto entityToDto(OperationEntity operationEntity) {
         return OperationDto.builder().
                 id(operationEntity.getId()).

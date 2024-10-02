@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AccountTypeMapper implements Mapper<AccountTypeDto, AccountTypeEntity> {
+
     @Override
     public AccountTypeDto entityToDto(AccountTypeEntity entity) {
         return AccountTypeDto.builder().
