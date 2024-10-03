@@ -3,7 +3,6 @@ package com.example.spring.controller;
 import com.example.spring.config.ApplicationConfig;
 import com.example.spring.model.TaskInput;
 import com.example.spring.model.TaskOutput;
-import com.example.spring.repositories.UserRepository;
 import com.example.spring.service.NumGetterPrototype;
 import com.example.spring.service.TaskProcessorService;
 import com.example.spring.service.component.NumGetterRequest;
@@ -26,7 +25,6 @@ public class TestController {
     private final TaskProcessorService taskProcessorService;
     private final NumGetterRequest numGetterRequest;
     private final RestCallerComponent restCallerComponent;
-    private final UserRepository repository;
 
     @PostMapping("/process")
     public TaskOutput doProcess(@RequestBody TaskInput taskInput) {

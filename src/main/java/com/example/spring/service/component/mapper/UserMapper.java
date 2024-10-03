@@ -25,15 +25,12 @@ public class UserMapper implements Mapper<UserDto, UserEntity> {
     public UserDto entityToDto(UserEntity userEntity) {
         ArrayList<Long> accounts = new ArrayList<>();
         List<AccountEntity> entityList = userEntity.getAccountEntityList();
-        if (entityList == null) {
-            return UserDto.builder().
-                    id(userEntity.getId()).
-                    fullName(userEntity.getFullName()).
-                    totalBalance(userEntity.getTotalBalance()).
-                    build();
-        }
-        for (int i = 0; i < entityList.size(); i++) {
-            accounts.add(entityList.get(i).getNumber());
+        if (entityList != null) {
+            for (int i = 0; i < entityList.size(); i++) {
+                accounts.add(entityList.get(i).getNumber());
+            }
+        } else {
+            accounts = null;
         }
         return UserDto.builder().
                 accounts(accounts).
@@ -64,15 +61,12 @@ public class UserMapper implements Mapper<UserDto, UserEntity> {
     public UserWithAccountsDto entityToDtoWithAccounts(UserEntity userEntity) {
         ArrayList<AccountDto> accounts = new ArrayList<>();
         List<AccountEntity> entityList = userEntity.getAccountEntityList();
-        if (entityList == null) {
-            return UserWithAccountsDto.builder().
-                    id(userEntity.getId()).
-                    fullName(userEntity.getFullName()).
-                    totalBalance(userEntity.getTotalBalance()).
-                    build();
-        }
-        for (int i = 0; i < entityList.size(); i++) {
-            accounts.add(accountMapper.entityToDto(entityList.get(i)));
+        if (entityList != null) {
+            for (int i = 0; i < entityList.size(); i++) {
+                accounts.add(accountMapper.entityToDto(entityList.get(i)));
+            }
+        } else {
+            accounts = null;
         }
         return UserWithAccountsDto.builder().
                 accounts(accounts).
