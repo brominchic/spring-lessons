@@ -121,4 +121,38 @@ class UserCrudJpaControllerTest extends SpringBootApplicationTest {
         assertEquals(300L, userDto.get().getTotalBalance());
     }
 
+    @Test
+    @Transactional
+    void getCustomTest() throws Exception {
+        List<UserEntity> userEntities = new ArrayList<>();
+        userEntities.add(UserEntity.builder().
+                id(1L).
+                fullName("dva").
+                totalBalance(100L).
+                build());
+        userEntities.add(UserEntity.builder().
+                id(2L).
+                fullName("odin").
+                totalBalance(200L).
+                build());
+        userEntities.add(UserEntity.builder().
+                id(56L).
+                fullName("tri").
+                totalBalance(300L).
+                build());
+        repository.saveAll(userEntities);
+        mockMvc.perform(get("/jpa/users/1/full")).
+                andDo(print());
+
+    }
+
+    @Test
+    void nonTransactionalTest() throws Exception {
+        mockMvc.perform(get("/jpa/users/test1/full")).
+                andDo(print());
+        mockMvc.perform(get("/jpa/users/test2/full")).
+                andDo(print());
+
+    }
+
 }
