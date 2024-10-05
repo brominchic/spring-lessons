@@ -22,6 +22,7 @@ import java.util.List;
 public class UserMapper implements Mapper<UserDto, UserEntity> {
     private final AccountMapper accountMapper;
 
+    @Override
     public UserDto entityToDto(UserEntity userEntity) {
         ArrayList<Long> accounts = new ArrayList<>();
         List<AccountEntity> entityList = userEntity.getAccountEntityList();
@@ -41,6 +42,7 @@ public class UserMapper implements Mapper<UserDto, UserEntity> {
 
     }
 
+    @Override
     public UserEntity dtoToEntity(UserDto userDto) {
         return UserEntity.builder().
                 id(userDto.getId()).

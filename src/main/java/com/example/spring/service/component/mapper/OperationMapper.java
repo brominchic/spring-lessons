@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OperationMapper implements Mapper<OperationDto, OperationEntity> {
 
+    @Override
     public OperationDto entityToDto(OperationEntity operationEntity) {
         return OperationDto.builder().
                 id(operationEntity.getId()).
@@ -23,6 +24,7 @@ public class OperationMapper implements Mapper<OperationDto, OperationEntity> {
                 toAccount(operationEntity.getToAccount().getNumber()).build();
     }
 
+    @Override
     public OperationEntity dtoToEntity(OperationDto operationDto) {
         return OperationEntity.builder().
                 id(operationDto.getId()).
