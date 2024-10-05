@@ -43,7 +43,7 @@ public class ManyToManyTest extends SpringBootApplicationTest {
                         )
                         .build()
         );
-        var test = userRepository.findUserById(1L);
+        var test = userRepository.findUserById(1L).orElseThrow();
         assertEquals(test.getSettings().size(), 3);
 
     }

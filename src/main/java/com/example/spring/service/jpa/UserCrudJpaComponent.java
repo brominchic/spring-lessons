@@ -53,9 +53,8 @@ public class UserCrudJpaComponent implements CrudJpaComponent<UserDto> {
         return result;
     }
 
-    @Transactional
     public UserWithAccountsDto getByIdWithAccounts(Long id) {
-        return mapper.entityToDtoWithAccounts(repository.findUserWithAccountsAndAccountTypes(id));
+        return mapper.entityToDtoWithAccounts(repository.findUserWithAccountsAndAccountTypesById(id).orElseThrow());
     }
 
 }

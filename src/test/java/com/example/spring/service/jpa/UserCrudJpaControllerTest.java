@@ -1,6 +1,7 @@
 package com.example.spring.service.jpa;
 
 import com.example.spring.controller.UserCrudJpaController;
+import com.example.spring.model.dto.UserDto;
 import com.example.spring.model.entity.UserEntity;
 import com.example.spring.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,8 @@ class UserCrudJpaControllerTest extends SpringBootApplicationTest {
     private UserCrudJpaController controller;
     @Autowired
     private UserRepository repository;
+    @Autowired
+    private UserCrudJpaComponent component;
 
     @Test
     @Transactional
@@ -124,34 +127,9 @@ class UserCrudJpaControllerTest extends SpringBootApplicationTest {
     @Test
     @Transactional
     void getCustomTest() throws Exception {
-        List<UserEntity> userEntities = new ArrayList<>();
-        userEntities.add(UserEntity.builder().
-                id(1L).
-                fullName("dva").
-                totalBalance(100L).
-                build());
-        userEntities.add(UserEntity.builder().
-                id(2L).
-                fullName("odin").
-                totalBalance(200L).
-                build());
-        userEntities.add(UserEntity.builder().
-                id(56L).
-                fullName("tri").
-                totalBalance(300L).
-                build());
-        repository.saveAll(userEntities);
-        mockMvc.perform(get("/jpa/users/1/full")).
-                andDo(print());
-
-    }
-
-    @Test
-    void nonTransactionalTest() throws Exception {
-        mockMvc.perform(get("/jpa/users/test1/full")).
-                andDo(print());
-        mockMvc.perform(get("/jpa/users/test2/full")).
-                andDo(print());
+        UserDto userDto = UserDto.builder().id(1L).build();
+        component.create(userDto);
+        System.out.println(component.getByIdWithAccounts(1L));
 
     }
 
