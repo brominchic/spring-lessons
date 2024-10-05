@@ -129,7 +129,7 @@ class UserCrudJpaControllerTest extends SpringBootApplicationTest {
     void getCustomTest() throws Exception {
         UserDto userDto = UserDto.builder().id(1L).build();
         component.create(userDto);
-        System.out.println(component.getByIdWithAccounts(1L));
+        // TODO перенести в правильное место и дописать
 
     }
 
