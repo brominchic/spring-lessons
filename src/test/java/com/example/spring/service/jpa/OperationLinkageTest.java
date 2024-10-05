@@ -34,7 +34,6 @@ class OperationLinkageTest extends SpringBootApplicationTest {
     @Test
     @Transactional
     void oneSettingLinkageTest() {
-        System.out.println();
         AccountTypeEntity accountTypeEntity = AccountTypeEntity.builder().
                 name(2L).
                 id(1L).
@@ -78,7 +77,6 @@ class OperationLinkageTest extends SpringBootApplicationTest {
         operationRepository.save(operationEntity);
         var settings = operationRepository.findById(1L).get().getSettings();
         assertEquals(settings, settingEntities);
-
     }
 
     @Test

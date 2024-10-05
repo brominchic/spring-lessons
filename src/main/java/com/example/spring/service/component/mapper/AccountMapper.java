@@ -18,7 +18,7 @@ public class AccountMapper implements Mapper<AccountDto, AccountEntity> {
     @Override
     public AccountDto entityToDto(AccountEntity entity) {
         return AccountDto.builder().
-                type(entity.getAccountTypeEntity().getName()).
+                type(entity.getAccountTypeEntity().getId()).
                 userId(entity.getUserEntity().getId()).
                 number(entity.getNumber()).
                 balance(entity.getBalance()).

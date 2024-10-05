@@ -1,7 +1,6 @@
 package com.example.spring.service.jpa;
 
 import com.example.spring.controller.UserCrudJpaController;
-import com.example.spring.model.dto.UserDto;
 import com.example.spring.model.entity.UserEntity;
 import com.example.spring.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -71,7 +70,6 @@ class UserCrudJpaControllerTest extends SpringBootApplicationTest {
 
     @Test
     @Transactional
-        // откатит все изменения сделанные в тесте
     void createTest() throws Exception {
         mockMvc.perform(post("/jpa/users/create")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -90,8 +88,8 @@ class UserCrudJpaControllerTest extends SpringBootApplicationTest {
 
     @Test
     @Transactional
-        // откатит все изменения сделанные в тесте
     void createBatchTest() throws Exception {
+        assertEquals(0, repository.count());
         mockMvc.perform(post("/jpa/users/create/batch")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -124,13 +122,5 @@ class UserCrudJpaControllerTest extends SpringBootApplicationTest {
         assertEquals(300L, userDto.get().getTotalBalance());
     }
 
-    @Test
-    @Transactional
-    void getCustomTest() throws Exception {
-        UserDto userDto = UserDto.builder().id(1L).build();
-        component.create(userDto);
-        // TODO перенести в правильное место и дописать
-
-    }
 
 }
