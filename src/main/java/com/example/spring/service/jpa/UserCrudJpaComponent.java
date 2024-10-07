@@ -1,11 +1,13 @@
 package com.example.spring.service.jpa;
 
 import com.example.spring.model.dto.UserDto;
+import com.example.spring.model.dto.UserWithAccountsDto;
 import com.example.spring.model.entity.UserEntity;
 import com.example.spring.repositories.UserRepository;
 import com.example.spring.service.component.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,11 +34,13 @@ public class UserCrudJpaComponent implements CrudJpaComponent<UserDto> {
     }
 
     @Override
+    @Transactional
     public UserDto create(UserDto dto) throws IOException {
         return mapper.entityToDto(repository.save(mapper.dtoToEntity(dto)));
     }
 
     @Override
+    @Transactional
     public List<UserDto> createBatch(List<UserDto> dList) {
         List<UserEntity> entityList = new ArrayList<>();
         for (UserDto dto : dList) {
@@ -47,6 +51,10 @@ public class UserCrudJpaComponent implements CrudJpaComponent<UserDto> {
             result.add(mapper.entityToDto(entity));
         }
         return result;
+    }
+
+    public UserWithAccountsDto getByIdWithAccounts(Long id) {
+        return mapper.entityToDtoWithAccounts(repository.findUserWithAccountsAndAccountTypesById(id).orElseThrow());
     }
 
 }

@@ -17,4 +17,6 @@ public class AccountDto {
 
     private Long type;
 
+    private Long userId;
+
 }

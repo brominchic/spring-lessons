@@ -31,6 +31,8 @@ class UserCrudJpaControllerTest extends SpringBootApplicationTest {
     private UserCrudJpaController controller;
     @Autowired
     private UserRepository repository;
+    @Autowired
+    private UserCrudJpaComponent component;
 
     @Test
     @Transactional
@@ -68,7 +70,6 @@ class UserCrudJpaControllerTest extends SpringBootApplicationTest {
 
     @Test
     @Transactional
-        // откатит все изменения сделанные в тесте
     void createTest() throws Exception {
         mockMvc.perform(post("/jpa/users/create")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -87,8 +88,8 @@ class UserCrudJpaControllerTest extends SpringBootApplicationTest {
 
     @Test
     @Transactional
-        // откатит все изменения сделанные в тесте
     void createBatchTest() throws Exception {
+        assertEquals(0, repository.count());
         mockMvc.perform(post("/jpa/users/create/batch")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -120,5 +121,6 @@ class UserCrudJpaControllerTest extends SpringBootApplicationTest {
         assertEquals("tri", userDto.get().getFullName());
         assertEquals(300L, userDto.get().getTotalBalance());
     }
+
 
 }

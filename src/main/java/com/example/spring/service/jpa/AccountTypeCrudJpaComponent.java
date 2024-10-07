@@ -6,6 +6,7 @@ import com.example.spring.repositories.AccountTypeRepository;
 import com.example.spring.service.component.mapper.AccountTypeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,11 +33,13 @@ public class AccountTypeCrudJpaComponent implements CrudJpaComponent<AccountType
     }
 
     @Override
+    @Transactional
     public AccountTypeDto create(AccountTypeDto dto) throws IOException {
         return mapper.entityToDto(repository.save(mapper.dtoToEntity(dto)));
     }
 
     @Override
+    @Transactional
     public List<AccountTypeDto> createBatch(List<AccountTypeDto> dList) {
         List<AccountTypeEntity> entityList = new ArrayList<>();
         for (AccountTypeDto dto : dList) {

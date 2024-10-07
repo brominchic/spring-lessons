@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,14 +26,14 @@ public class UserEntity {
     @Column(name = "total_balance")
     private Long totalBalance;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "number", cascade = CascadeType.ALL)
-    private List<AccountEntity> accountEntityList = new ArrayList<>();
+    @OneToMany(mappedBy = "number", cascade = CascadeType.ALL)
+    private List<AccountEntity> accountEntityList;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "users_settings",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "setting_id", referencedColumnName = "id"))
-    private Set<SettingEntity> settings = new HashSet<SettingEntity>();
+    private Set<SettingEntity> settings;
 
 
 }

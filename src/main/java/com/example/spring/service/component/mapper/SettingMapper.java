@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SettingMapper implements Mapper<SettingDto, SettingEntity> {
 
+    @Override
     public SettingDto entityToDto(SettingEntity settingEntity) {
         return SettingDto.builder().
                 id(settingEntity.getId()).
@@ -18,6 +19,7 @@ public class SettingMapper implements Mapper<SettingDto, SettingEntity> {
                 build();
     }
 
+    @Override
     public SettingEntity dtoToEntity(SettingDto settingDto) {
         return SettingEntity.builder().
                 id(settingDto.getId()).

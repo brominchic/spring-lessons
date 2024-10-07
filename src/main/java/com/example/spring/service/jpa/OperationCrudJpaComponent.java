@@ -6,6 +6,7 @@ import com.example.spring.repositories.OperationRepository;
 import com.example.spring.service.component.mapper.OperationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,11 +33,13 @@ public class OperationCrudJpaComponent implements CrudJpaComponent<OperationDto>
     }
 
     @Override
+    @Transactional
     public OperationDto create(OperationDto dto) throws IOException {
         return mapper.entityToDto(repository.save(mapper.dtoToEntity(dto)));
     }
 
     @Override
+    @Transactional
     public List<OperationDto> createBatch(List<OperationDto> dList) {
         List<OperationEntity> entityList = new ArrayList<>();
         for (OperationDto dto : dList) {

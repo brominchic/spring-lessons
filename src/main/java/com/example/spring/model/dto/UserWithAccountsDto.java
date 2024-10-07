@@ -11,13 +11,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserDto {
+public class UserWithAccountsDto {
     private Long id;
 
     private String fullName;
 
     private Long totalBalance;
 
-    private List<Long> accounts;
-
+    private List<AccountDto> accounts;
 }
