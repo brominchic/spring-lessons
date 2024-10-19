@@ -8,9 +8,9 @@ import java.util.List;
 @Component
 public interface CrudJpaComponent<D> {
 
-    List<D> getAll();
+    List<D> getAll() throws IOException;
 
     D create(D dto) throws IOException;
 
-    List<D> createBatch(List<D> dList);
+    List<D> createBatch(List<D> dList) throws IOException;
 }
