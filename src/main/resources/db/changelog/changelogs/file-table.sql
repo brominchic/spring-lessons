@@ -7,3 +7,4 @@ CREATE TABLE files (
                 references users
                 on delete restrict
 );
+

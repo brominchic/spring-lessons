@@ -4,4 +4,6 @@ databaseChangeLog:
   - include:
       file: db/changelog/changelogs/new-constraint.sql
   - include:
-      file: db/changelog/changelogs/new-table.sql
+      file: db/changelog/changelogs/file-table.sql
+  - include:
+      file: db/changelog/changelogs/file-sequence.sql
