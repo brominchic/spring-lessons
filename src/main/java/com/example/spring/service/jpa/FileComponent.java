@@ -18,13 +18,18 @@ public class FileComponent {
 
     @Transactional
     public Long create(Long userId, MultipartFile file) throws IOException {
-        FileEntity entity = FileEntity.builder().userEntity(UserEntity.builder().id(userId).build()).fileData(file.getBytes()).filename(file.getOriginalFilename()).build();
+        FileEntity entity = FileEntity.
+                builder().
+                userEntity(UserEntity.builder().id(userId).build()).
+                fileData(file.getBytes()).
+                filename(file.getOriginalFilename()).
+                build();
         return repository.save(entity).getId();
     }
     
     @Transactional
-    public byte[] getFile(String filename) throws IOException {
-        byte[] resource = repository.findByFilename(filename).orElseThrow().getFileData();
+    public byte[] getFile(Long id) throws IOException {
+        byte[] resource = repository.findById(id).orElseThrow().getFileData();
         return resource;
     }
 }

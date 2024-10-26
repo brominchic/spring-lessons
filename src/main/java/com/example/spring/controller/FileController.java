@@ -12,16 +12,16 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class FileController {
 
-    private final FileComponent jpaComponent;
+    private final FileComponent fileComponent;
 
     @PostMapping("/upload")
     public Long uploadFile(@RequestParam("file") MultipartFile file, @RequestParam("userId") Long userId) throws IOException {
-        return jpaComponent.create(userId, file);
+        return fileComponent.create(userId, file);
     }
 
-    @GetMapping("/download/{filename:.+}")
-    public byte[] getFile(@PathVariable String filename) throws IOException {
-        return jpaComponent.getFile(filename);
+    @GetMapping("/download/{id}")
+    public byte[] getFile(@PathVariable Long id) throws IOException {
+        return fileComponent.getFile(id);
     }
 
 }
