@@ -1,7 +1,9 @@
 package com.example.spring.controller;
 
 import com.example.spring.service.jpa.FileComponent;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,8 +22,8 @@ public class FileController {
     }
 
     @GetMapping("/download/{id}")
-    public byte[] getFile(@PathVariable Long id) throws IOException {
-        return fileComponent.getFile(id);
+    public HttpEntity<byte[]> getFile(@PathVariable Long id, HttpServletResponse response) throws IOException {
+        return fileComponent.getFile(id, response);
     }
 
 }
