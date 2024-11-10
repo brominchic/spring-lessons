@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class OperationCrudJpaComponent implements CrudJpaComponent<OperationDto>
 
     @Override
     @Transactional
-    public OperationDto create(OperationDto dto) throws IOException {
+    public OperationDto create(OperationDto dto) {
         return mapper.entityToDto(repository.save(mapper.dtoToEntity(dto)));
     }
 

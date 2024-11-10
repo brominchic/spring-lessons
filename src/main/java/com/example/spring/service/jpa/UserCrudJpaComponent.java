@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +34,7 @@ public class UserCrudJpaComponent implements CrudJpaComponent<UserDto> {
 
     @Override
     @Transactional
-    public UserDto create(UserDto dto) throws IOException {
+    public UserDto create(UserDto dto) {
         return mapper.entityToDto(repository.save(mapper.dtoToEntity(dto)));
     }
 
