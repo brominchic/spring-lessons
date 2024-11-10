@@ -4,10 +4,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface Mapper<D, E> {
-    D entityToDto(E entity) throws Exception;
+    D entityToDto(E entity);
 
     E dtoToEntity(D dto);
-
-    D stringToDto(String string) throws Exception;
 
 }
