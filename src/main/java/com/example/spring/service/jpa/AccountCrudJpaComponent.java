@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class AccountCrudJpaComponent implements CrudJpaComponent<AccountDto> {
 
     @Override
     @Transactional
-    public AccountDto create(AccountDto dto) throws IOException {
+    public AccountDto create(AccountDto dto) {
         var newAccount = mapper.dtoToEntity(dto);
         if (dto.getUserId() != null) {
             var user = userRepository.findById(dto.getUserId()).orElseThrow();
