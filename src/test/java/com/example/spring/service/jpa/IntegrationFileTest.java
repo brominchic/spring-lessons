@@ -31,7 +31,7 @@ class IntegrationFileTest extends SpringBootApplicationTest {
     /*
     за интеграционный тест загрузить файл в БД через POST используя restTemplate,
     скачать обратно также через GET, проверить соответствие.
-    файл должен храниться в resources
+    файл должен храниться в resource
     */
     @Test
     void testUploadAndDownloadFile() throws Exception {
