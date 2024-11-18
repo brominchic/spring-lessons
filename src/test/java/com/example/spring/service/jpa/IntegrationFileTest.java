@@ -4,9 +4,9 @@ import com.example.spring.model.entity.UserEntity;
 import com.example.spring.repositories.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
@@ -25,8 +25,8 @@ class IntegrationFileTest extends SpringBootApplicationTest {
     UserRepository repository;
     @Autowired
     private RestTemplate restTemplate;
-
-    ClassPathResource classPathResource = new ClassPathResource("/antonosov.txt", this.getClass().getClassLoader());
+    @Value("classpath:/antonosov.txt")
+    private Resource classPathResource;
 
     /*
     за интеграционный тест загрузить файл в БД через POST используя restTemplate,
