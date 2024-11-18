@@ -25,7 +25,7 @@ class IntegrationFileTest extends SpringBootApplicationTest {
     UserRepository repository;
     @Autowired
     private RestTemplate restTemplate;
-    @Value("classpath:/antonosov.txt")
+    @Value("classpath:antonosov.txt")
     private Resource classPathResource;
 
     /*
