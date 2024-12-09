@@ -21,6 +21,6 @@ public class AccountTypeEntity {
     private Long id;
 
     @Column(name = "name")
-    private Long name;
+    private String name;
 
 }

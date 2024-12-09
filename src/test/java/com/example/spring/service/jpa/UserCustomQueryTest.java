@@ -36,7 +36,7 @@ class UserCustomQueryTest extends SpringBootApplicationTest {
                 build();
         userComponent.create(user);
         AccountTypeDto accountTypeDto = AccountTypeDto.builder().
-                name(2222L).
+                name("papappa").
                 id(1L).
                 build();
         accountTypeComponent.create(accountTypeDto);
