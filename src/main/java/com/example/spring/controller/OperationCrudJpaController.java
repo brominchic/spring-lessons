@@ -3,6 +3,7 @@ package com.example.spring.controller;
 import com.example.spring.model.dto.OperationDto;
 import com.example.spring.service.jpa.OperationCrudJpaComponent;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -21,7 +22,7 @@ public class OperationCrudJpaController implements CrudJpaController<OperationDt
     }
 
     @PostMapping("/create")
-    public OperationDto create(@RequestBody OperationDto input) throws IOException {
+    public OperationDto create(@RequestBody @Validated OperationDto input) throws IOException {
         return jpaComponent.create(input);
     }
 

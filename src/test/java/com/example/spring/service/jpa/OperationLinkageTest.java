@@ -35,7 +35,7 @@ class OperationLinkageTest extends SpringBootApplicationTest {
     @Transactional
     void oneSettingLinkageTest() {
         AccountTypeEntity accountTypeEntity = AccountTypeEntity.builder().
-                name(2L).
+                name("papapa").
                 id(1L).
                 build();
         accountTypeRepository.save(accountTypeEntity);
@@ -84,7 +84,7 @@ class OperationLinkageTest extends SpringBootApplicationTest {
     void manySettingLinkageTest() {
         System.out.println();
         AccountTypeEntity accountTypeEntity = AccountTypeEntity.builder().
-                name(2L).
+                name("papap").
                 id(1L).build();
         accountTypeRepository.save(accountTypeEntity);
         UserEntity user = UserEntity.builder().
@@ -135,7 +135,7 @@ class OperationLinkageTest extends SpringBootApplicationTest {
     void accountsLinkageTest() {
         System.out.println();
         AccountTypeEntity accountTypeEntity = AccountTypeEntity.builder().
-                name(2L).
+                name("pap]").
                 id(1L).build();
         accountTypeRepository.save(accountTypeEntity);
         UserEntity user = UserEntity.builder().
