@@ -2,9 +2,9 @@ package com.example.spring.controller;
 
 import com.example.spring.model.dto.AccountTypeDto;
 import com.example.spring.service.jpa.AccountTypeCrudJpaComponent;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class AccountTypeCrudJpaController implements CrudJpaController<AccountTy
     }
 
     @PostMapping("/create")
-    public AccountTypeDto create(@RequestBody @Validated AccountTypeDto input) throws IOException {
+    public AccountTypeDto create(@RequestBody @Valid AccountTypeDto input) throws IOException {
         return jpaComponent.create(input);
     }
 

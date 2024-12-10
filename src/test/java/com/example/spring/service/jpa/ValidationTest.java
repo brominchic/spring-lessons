@@ -10,10 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.NoSuchElementException;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -36,14 +34,8 @@ public class ValidationTest extends SpringBootApplicationTest {
                             "fullName":"dvafffffffffffffffff",
                             "totalBalance":100
                         }
-                        """));
-        var userDto = repository.findById(1L);
-        try {
-            assertEquals("dvafffffffffffffffff", userDto.get().getFullName());
-        } catch (NoSuchElementException e) {
-            assertEquals(e.getClass(), NoSuchElementException.class);
-        }
-
+                        """))
+                .andExpect(status().is(400));
     }
 
 }
