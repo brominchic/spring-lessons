@@ -2,6 +2,7 @@ package com.example.spring.controller;
 
 import com.example.spring.model.dto.SettingDto;
 import com.example.spring.service.jpa.SettingCrudJpaComponent;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class SettingCrudJpaController implements CrudJpaController<SettingDto> {
     }
 
     @PostMapping("/create")
-    public SettingDto create(@RequestBody SettingDto input) throws IOException {
+    public SettingDto create(@RequestBody @Valid SettingDto input) throws IOException {
         return jpaComponent.create(input);
     }
 
