@@ -1,11 +1,11 @@
 package com.example.spring.model.dto;
 
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 @Data
@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 @Builder
 public class AccountTypeDto {
+    @NotNull
     @Min(value = 0L)
     private Long id;
 

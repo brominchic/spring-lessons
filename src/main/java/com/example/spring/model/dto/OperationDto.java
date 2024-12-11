@@ -1,11 +1,11 @@
 package com.example.spring.model.dto;
 
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 @Data
@@ -26,7 +26,7 @@ public class OperationDto {
     private Long toAccount;
 
     @NotNull
-    @Min(value = 0L)
+    @Min(value = 1L)
     private Long sum;
 
     @NotNull
