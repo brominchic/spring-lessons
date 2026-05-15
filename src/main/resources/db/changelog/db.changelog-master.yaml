@@ -1,7 +1,171 @@
 databaseChangeLog:
-  - include:
-      file: db/changelog/changelogs/initial-schema.sql
-  - include:
-      file: db/changelog/changelogs/new-constraint.sql
-  - include:
-      file: db/changelog/changelogs/file-table.sql
+  - changeSet:
+      id: 001-create-marketing-calendar
+      author: brominchik
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: "select count(*) from databasechangelog where id = '001-create-marketing-calendar' and author = concat('co', 'dex')"
+      changes:
+        - sqlFile:
+            path: db/changelog/changelogs/001-create-marketing-calendar.sql
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 002-seed-marketing-calendar
+      author: brominchik
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: "select count(*) from databasechangelog where id = '002-seed-marketing-calendar' and author = concat('co', 'dex')"
+      changes:
+        - sqlFile:
+            path: db/changelog/changelogs/002-seed-marketing-calendar.sql
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 003-import-farmers-sku
+      author: brominchik
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: "select count(*) from databasechangelog where id = '003-import-farmers-sku' and author = concat('co', 'dex')"
+      changes:
+        - sqlFile:
+            path: db/changelog/changelogs/003-import-farmers-sku.sql
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 004-seasonality-boosts-and-events
+      author: brominchik
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: "select count(*) from databasechangelog where id = '004-seasonality-boosts-and-events' and author = concat('co', 'dex')"
+      changes:
+        - sqlFile:
+            path: db/changelog/changelogs/004-seasonality-boosts-and-events.sql
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 005-normalize-farmers
+      author: brominchik
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: "select count(*) from databasechangelog where id = '005-normalize-farmers' and author = concat('co', 'dex')"
+      changes:
+        - sqlFile:
+            path: db/changelog/changelogs/005-normalize-farmers.sql
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 006-rename-external-channel-labels
+      author: brominchik
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: "select count(*) from databasechangelog where id = '006-rename-external-channel-labels' and author = concat('co', 'dex')"
+      changes:
+        - sqlFile:
+            path: db/changelog/changelogs/006-rename-external-channel-labels.sql
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 007-breakfast-event-boost
+      author: brominchik
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: "select count(*) from databasechangelog where id = '007-breakfast-event-boost' and author = concat('co', 'dex')"
+      changes:
+        - sqlFile:
+            path: db/changelog/changelogs/007-breakfast-event-boost.sql
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 008-category-relevance-boosts
+      author: brominchik
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: "select count(*) from databasechangelog where id = '008-category-relevance-boosts' and author = concat('co', 'dex')"
+      changes:
+        - sqlFile:
+            path: db/changelog/changelogs/008-category-relevance-boosts.sql
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 009-event-date-ranges
+      author: brominchik
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: "select count(*) from databasechangelog where id = '009-event-date-ranges' and author = concat('co', 'dex')"
+      changes:
+        - sqlFile:
+            path: db/changelog/changelogs/009-event-date-ranges.sql
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 010-russian-cuisine-seasonal-menu
+      author: brominchik
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: "select count(*) from databasechangelog where id = '010-russian-cuisine-seasonal-menu' and author = concat('co', 'dex')"
+      runOnChange: true
+      changes:
+        - sqlFile:
+            path: db/changelog/changelogs/010-russian-cuisine-seasonal-menu.sql
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 011-farmer-calendar-state
+      author: brominchik
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: "select count(*) from databasechangelog where id = '011-farmer-calendar-state' and author = concat('co', 'dex')"
+      changes:
+        - sqlFile:
+            path: db/changelog/changelogs/011-farmer-calendar-state.sql
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 012-plan-fact-and-history
+      author: brominchik
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: "select count(*) from databasechangelog where id = '012-plan-fact-and-history' and author = concat('co', 'dex')"
+      changes:
+        - sqlFile:
+            path: db/changelog/changelogs/012-plan-fact-and-history.sql
+            splitStatements: true
+            stripComments: true
+  - changeSet:
+      id: 013-fix-meat-category-normalization
+      author: brominchik
+      preConditions:
+        - onFail: MARK_RAN
+        - sqlCheck:
+            expectedResult: 0
+            sql: "select count(*) from databasechangelog where id = '013-fix-meat-category-normalization' and author = concat('co', 'dex')"
+      changes:
+        - sqlFile:
+            path: db/changelog/changelogs/013-fix-meat-category-normalization.sql
+            splitStatements: true
+            stripComments: true

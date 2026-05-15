@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Своё Родное | Календарь продаж</title>
+    <link rel="stylesheet" href="styles.css?v=34">
+</head>
+<body>
+<header class="cabinet-top">
+    <a class="brand" href="#calendar" aria-label="Своё Родное">
+        <span class="brand-logo"></span>
+        <strong>Своё</strong>
+        <span class="brand-line"></span>
+        <span>Родное</span>
+        <span class="brand-arrow">⌄</span>
+    </a>
+
+    <nav class="top-actions" aria-label="Верхнее меню">
+        <a href="#" data-start-onboarding aria-label="Пройти обучение">?</a>
+        <a href="#" data-start-onboarding>Помощь</a>
+        <a href="#">Экосистема</a>
+        <div class="farmer-switcher" id="farmer-switcher">
+            <button class="farmer-avatar-button" id="farmer-avatar" type="button" aria-expanded="false" aria-haspopup="listbox">
+                <span id="farmer-avatar-initials">Все</span>
+            </button>
+            <div class="farmer-menu" id="farmer-menu" role="listbox" aria-label="Выбор фермера"></div>
+        </div>
+    </nav>
+</header>
+
+<div class="cabinet-shell">
+    <aside class="sidebar" aria-label="Меню личного кабинета">
+        <section class="side-card main-menu">
+            <div class="side-brand">
+                <span class="brand-logo small"></span>
+                <strong>Своё</strong>
+                <span class="brand-line"></span>
+                <span>Родное</span>
+            </div>
+
+            <nav class="side-nav">
+                <button class="menu-item" type="button" data-view="seller" data-title="Страница продавца">
+                    <span class="menu-icon">⌂</span>
+                    <span>Страница продавца</span>
+                </button>
+                <button class="menu-item" type="button" data-view="products" data-title="Товары">
+                    <span class="menu-icon">▰</span>
+                    <span>Товары</span>
+                </button>
+                <button class="menu-item" type="button" data-view="orders" data-title="Заказы">
+                    <span class="menu-icon">▤</span>
+                    <span>Заказы</span>
+                </button>
+                <button class="menu-item" type="button" data-view="clients" data-title="Клиенты">
+                    <span class="menu-icon">☷</span>
+                    <span>Клиенты</span>
+                </button>
+                <button class="menu-item" type="button" data-view="delivery" data-title="Способ доставки">
+                    <span class="menu-icon">▣</span>
+                    <span>Способ доставки</span>
+                </button>
+                <button class="menu-item" type="button" data-view="payments" data-title="Способы оплаты">
+                    <span class="menu-icon">▱</span>
+                    <span>Способы оплаты</span>
+                </button>
+                <button class="menu-item" type="button" data-view="discounts" data-title="Промокоды и скидки">
+                    <span class="menu-icon">%</span>
+                    <span>Промокоды и скидки</span>
+                </button>
+                <button class="menu-item" type="button" data-view="chats" data-title="Чаты">
+                    <span class="menu-icon">●</span>
+                    <span>Чаты</span>
+                    <mark>23</mark>
+                </button>
+                <button class="menu-item" type="button" data-view="integrations" data-title="Интеграции">
+                    <span class="menu-icon">∞</span>
+                    <span>Интеграции</span>
+                </button>
+                <button class="menu-item" type="button" data-view="growth" data-title="Как увеличить продажи">
+                    <span class="menu-icon">⌁</span>
+                    <span>Как увеличить продажи</span>
+                </button>
+                <button class="menu-item calendar-entry active" type="button" data-view="calendar" data-title="Календарь продаж">
+                    <span class="menu-icon">▦</span>
+                    <span>Календарь продаж</span>
+                </button>
+                <button class="menu-item" type="button" data-view="admin" data-title="Управление событиями">
+                    <span class="menu-icon">✎</span>
+                    <span>Управление событиями</span>
+                </button>
+                <button class="menu-item" type="button" data-view="documents" data-title="Документы">
+                    <span class="menu-icon">▧</span>
+                    <span>Документы</span>
+                </button>
+                <button class="menu-item" type="button" data-view="site" data-title="Сайт-визитка">
+                    <span class="menu-icon">◫</span>
+                    <span>Сайт-визитка</span>
+                </button>
+            </nav>
+        </section>
+
+        <section class="side-card compact">
+            <span class="menu-icon">▦</span>
+            <span>Карта возможностей</span>
+        </section>
+
+        <section class="side-card bank-menu">
+            <header>
+                <strong>Банк</strong>
+                <span>⌃</span>
+            </header>
+            <button class="menu-item" type="button" data-view="account" data-title="Расчётный счёт">
+                <span class="menu-icon">₽</span><span>Расчётный счёт</span>
+            </button>
+            <button class="menu-item" type="button" data-view="farmer-card" data-title="Карта фермера">
+                <span class="menu-icon">▬</span><span>Карта фермера</span>
+            </button>
+            <button class="menu-item" type="button" data-view="credit" data-title="Льготное кредитование">
+                <span class="menu-icon">%</span><span>Льготное кредитование</span>
+            </button>
+            <button class="menu-item" type="button" data-view="business" data-title="ДБО “Свой Бизнес”">
+                <span class="menu-icon">▥</span><span>ДБО “Свой Бизнес”</span>
+            </button>
+        </section>
+    </aside>
+
+    <main class="content">
+        <header class="content-head">
+            <h1 id="page-title">Календарь продаж</h1>
+            <p id="page-subtitle">Планируйте события, акции и публикации под реальные товары фермера</p>
+        </header>
+
+        <section class="page-view active" id="calendar-view" data-title="Календарь продаж" data-subtitle="Планируйте события, акции и публикации под реальные товары фермера">
+            <section class="panel calendar-panel">
+                <header class="panel-head">
+                    <div>
+                        <h2>Календарь событийного маркетинга</h2>
+                        <p>Сервис подсвечивает товар в подходящий момент праздника или события и предлагает каналы продвижения.</p>
+                    </div>
+                </header>
+
+                <div class="calendar-controls">
+                    <div class="period-picker" aria-label="Период календаря">
+                        <div class="period-toolbar">
+                            <div class="period-mode" role="tablist" aria-label="Тип периода">
+                                <button class="period-mode-button active" type="button" data-period-mode="month">Месяц</button>
+                                <button class="period-mode-button" type="button" data-period-mode="quarter">Квартал</button>
+                            </div>
+                            <div class="year-stepper" aria-label="Год">
+                                <button type="button" data-year-step="-1" aria-label="Предыдущий год">‹</button>
+                                <strong id="period-year">2026</strong>
+                                <button type="button" data-year-step="1" aria-label="Следующий год">›</button>
+                            </div>
+                        </div>
+                        <div class="period-options" id="month-options">
+                            <button type="button" data-period-month="1">Янв</button>
+                            <button type="button" data-period-month="2">Фев</button>
+                            <button type="button" data-period-month="3">Мар</button>
+                            <button type="button" data-period-month="4">Апр</button>
+                            <button type="button" data-period-month="5">Май</button>
+                            <button type="button" data-period-month="6">Июн</button>
+                            <button type="button" data-period-month="7">Июл</button>
+                            <button type="button" data-period-month="8">Авг</button>
+                            <button type="button" data-period-month="9">Сен</button>
+                            <button type="button" data-period-month="10">Окт</button>
+                            <button type="button" data-period-month="11">Ноя</button>
+                            <button type="button" data-period-month="12">Дек</button>
+                        </div>
+                        <div class="period-options quarter-options" id="quarter-options" hidden>
+                            <button type="button" data-period-quarter="1">I квартал</button>
+                            <button type="button" data-period-quarter="2">II квартал</button>
+                            <button type="button" data-period-quarter="3">III квартал</button>
+                            <button type="button" data-period-quarter="4">IV квартал</button>
+                        </div>
+                    </div>
+                    <label>Категория
+                        <select id="category">
+                            <option value="">Все категории</option>
+                        </select>
+                    </label>
+                    <button id="refresh-calendar" class="primary-button" type="button">Обновить</button>
+                </div>
+
+                <div class="calendar-summary" id="calendar-summary"></div>
+            </section>
+
+            <section class="panel planning-tools" id="planning-tools" hidden></section>
+
+            <section class="calendar-layout">
+                <div class="calendar-main">
+                    <section class="panel assortment-panel">
+                        <header class="panel-head">
+                            <h2>Товары для продвижения</h2>
+                        </header>
+                        <div class="assortment-grid" id="product-grid"></div>
+                    </section>
+
+                    <div class="calendar-list" id="calendar-list"></div>
+                </div>
+
+                <aside class="panel recommendations">
+                    <div class="recommendations-head">
+                        <h2>Рекомендации</h2>
+                    </div>
+                    <ul id="recommendations"></ul>
+                </aside>
+            </section>
+        </section>
+
+        <section class="page-view" id="admin-view">
+            <section class="panel admin-panel">
+                <header class="panel-head">
+                    <div>
+                        <h2>Управление событиями</h2>
+                        <p>Добавляйте инфоповоды, сезонные пики, локальные события, теги, каналы и коэффициенты роста.</p>
+                    </div>
+                    <button class="ghost-button" id="admin-new-event" type="button">Новое событие</button>
+                </header>
+
+                <form class="admin-form" id="admin-event-form">
+                    <input id="admin-event-id" type="hidden">
+                    <label class="wide">Название
+                        <input id="admin-title" type="text" placeholder="Например: День урожая в Тульской области" required>
+                    </label>
+                    <label>Начало акции
+                        <input id="admin-start-date" type="date" required>
+                    </label>
+                    <label>Конец акции
+                        <input id="admin-end-date" type="date" required>
+                    </label>
+                    <label>Тип
+                        <select id="admin-type">
+                            <option value="Праздник">Праздник</option>
+                            <option value="Сезонность">Сезонность</option>
+                            <option value="Тренд">Тренд</option>
+                            <option value="Локальное событие">Локальное событие</option>
+                        </select>
+                    </label>
+                    <label>ROI, %
+                        <input id="admin-roi" type="number" min="0" required>
+                    </label>
+                    <section class="admin-presets wide">
+                        <h3>Шаблоны delivery-акций</h3>
+                        <div id="admin-presets"></div>
+                    </section>
+                    <label class="wide">Теги события
+                        <textarea id="admin-tags" rows="3" placeholder="подарок, локальный продукт, ягоды"></textarea>
+                    </label>
+                    <label class="wide">Каналы
+                        <textarea id="admin-channels" rows="3" placeholder="Витрина, Пуш, Соцсети"></textarea>
+                    </label>
+
+                    <div class="admin-boosts wide">
+                        <div class="admin-subhead">
+                            <h3>Коэффициенты по категориям и тегам</h3>
+                            <button class="ghost-button" id="admin-add-boost" type="button">Добавить коэффициент</button>
+                        </div>
+                        <div id="admin-boost-list"></div>
+                    </div>
+
+                    <div class="admin-actions wide">
+                        <button class="primary-button" type="submit">Сохранить событие</button>
+                        <button class="ghost-button" id="admin-reset" type="button">Очистить</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="panel admin-list-panel">
+                <header class="panel-head">
+                    <h2>Готовые события</h2>
+                </header>
+                <div class="admin-event-list" id="admin-event-list"></div>
+            </section>
+        </section>
+
+        <section class="page-view" id="placeholder-view">
+            <section class="panel placeholder-panel">
+                <span class="placeholder-icon">▧</span>
+                <h2 id="placeholder-title">Раздел</h2>
+                <p>Этот раздел личного кабинета оставлен заглушкой. В рамках кейса реализован пункт меню “Календарь продаж”.</p>
+                <button class="primary-button" type="button" id="back-to-calendar">Открыть календарь</button>
+            </section>
+        </section>
+    </main>
+</div>
+
+<div class="tour-layer" id="tour-layer" hidden>
+    <div class="tour-spotlight" id="tour-spotlight"></div>
+    <section class="tour-card" id="tour-card">
+        <button class="tour-close" type="button" aria-label="Закрыть обучение" data-close-onboarding>×</button>
+        <div class="tour-step-label" id="onboarding-step"></div>
+        <div class="tour-card-body">
+            <span class="tour-icon" id="onboarding-icon">◷</span>
+            <div>
+                <h2 id="onboarding-title">Настройте календарь</h2>
+                <p id="onboarding-text">Выберите месяц или квартал.</p>
+            </div>
+        </div>
+        <div class="tour-examples" id="onboarding-examples"></div>
+        <div class="tour-footer">
+            <div class="tour-dots" id="onboarding-dots" aria-hidden="true"></div>
+            <div class="tour-actions">
+                <button class="ghost-button" id="onboarding-prev" type="button" data-onboarding-prev>Назад</button>
+                <button class="primary-button" id="onboarding-next" type="button" data-onboarding-next>Далее</button>
+            </div>
+        </div>
+    </section>
+</div>
+
+<button class="training-invite" id="training-invite" type="button" aria-label="Пройти обучение">
+    <span>Быстро покажем, как работать с календарём</span>
+    <strong>Пройти обучение</strong>
+</button>
+
+<button class="training-help" id="training-help" type="button" aria-label="Показать приглашение к обучению" hidden>?</button>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="https://js.puter.com/v2/"></script>
+<script src="app.js?v=49"></script>
+</body>
+</html>

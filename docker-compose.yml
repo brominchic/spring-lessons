@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: farmers
+      POSTGRES_USER: farmers
+      POSTGRES_PASSWORD: farmers
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U farmers -d farmers"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/farmers
+      SPRING_DATASOURCE_USERNAME: farmers
+      SPRING_DATASOURCE_PASSWORD: farmers
+    ports:
+      - "9999:9999"
+
+volumes:
+  postgres_data:
