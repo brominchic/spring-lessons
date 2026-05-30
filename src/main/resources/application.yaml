@@ -19,3 +19,9 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.yaml
+gigachat:
+  auth-key: ${GIGACHAT_AUTH_KEY:MDE5ZTc5NjEtMTc0OC03NWRlLThiNjctZTNiM2UwNTNhZWVmOjliN2JjNzI0LTFmMGQtNGYzNS1hY2Y0LTNlNjEzYzZkMzg4Mw==}
+  oauth-url: ${GIGACHAT_OAUTH_URL:https://ngw.devices.sberbank.ru:9443/api/v2/oauth}
+  chat-url: ${GIGACHAT_CHAT_URL:https://gigachat.devices.sberbank.ru/api/v1/chat/completions}
+  model: ${GIGACHAT_MODEL:GigaChat-2}
+  insecure-ssl: ${GIGACHAT_INSECURE_SSL:true}

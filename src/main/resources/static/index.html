@@ -3,23 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Своё Родное | Календарь продаж</title>
-    <link rel="stylesheet" href="styles.css?v=34">
+    <title>Календарь продаж</title>
+    <link rel="stylesheet" href="styles.css?v=38">
 </head>
 <body>
 <header class="cabinet-top">
-    <a class="brand" href="#calendar" aria-label="Своё Родное">
-        <span class="brand-logo"></span>
-        <strong>Своё</strong>
-        <span class="brand-line"></span>
-        <span>Родное</span>
-        <span class="brand-arrow">⌄</span>
+    <a class="brand" href="#calendar" aria-label="Календарь продаж">
+        <strong>Календарь продаж</strong>
     </a>
 
     <nav class="top-actions" aria-label="Верхнее меню">
-        <a href="#" data-start-onboarding aria-label="Пройти обучение">?</a>
-        <a href="#" data-start-onboarding>Помощь</a>
-        <a href="#">Экосистема</a>
+        <button type="button" data-start-onboarding aria-label="Пройти обучение">?</button>
+        <button type="button" data-start-onboarding>Помощь</button>
         <div class="farmer-switcher" id="farmer-switcher">
             <button class="farmer-avatar-button" id="farmer-avatar" type="button" aria-expanded="false" aria-haspopup="listbox">
                 <span id="farmer-avatar-initials">Все</span>
@@ -33,95 +28,23 @@
     <aside class="sidebar" aria-label="Меню личного кабинета">
         <section class="side-card main-menu">
             <div class="side-brand">
-                <span class="brand-logo small"></span>
-                <strong>Своё</strong>
-                <span class="brand-line"></span>
-                <span>Родное</span>
+                <strong>Меню</strong>
             </div>
 
             <nav class="side-nav">
-                <button class="menu-item" type="button" data-view="seller" data-title="Страница продавца">
-                    <span class="menu-icon">⌂</span>
-                    <span>Страница продавца</span>
-                </button>
-                <button class="menu-item" type="button" data-view="products" data-title="Товары">
-                    <span class="menu-icon">▰</span>
-                    <span>Товары</span>
-                </button>
-                <button class="menu-item" type="button" data-view="orders" data-title="Заказы">
-                    <span class="menu-icon">▤</span>
-                    <span>Заказы</span>
-                </button>
-                <button class="menu-item" type="button" data-view="clients" data-title="Клиенты">
-                    <span class="menu-icon">☷</span>
-                    <span>Клиенты</span>
-                </button>
-                <button class="menu-item" type="button" data-view="delivery" data-title="Способ доставки">
-                    <span class="menu-icon">▣</span>
-                    <span>Способ доставки</span>
-                </button>
-                <button class="menu-item" type="button" data-view="payments" data-title="Способы оплаты">
-                    <span class="menu-icon">▱</span>
-                    <span>Способы оплаты</span>
-                </button>
-                <button class="menu-item" type="button" data-view="discounts" data-title="Промокоды и скидки">
-                    <span class="menu-icon">%</span>
-                    <span>Промокоды и скидки</span>
-                </button>
-                <button class="menu-item" type="button" data-view="chats" data-title="Чаты">
-                    <span class="menu-icon">●</span>
-                    <span>Чаты</span>
-                    <mark>23</mark>
-                </button>
-                <button class="menu-item" type="button" data-view="integrations" data-title="Интеграции">
-                    <span class="menu-icon">∞</span>
-                    <span>Интеграции</span>
-                </button>
-                <button class="menu-item" type="button" data-view="growth" data-title="Как увеличить продажи">
-                    <span class="menu-icon">⌁</span>
-                    <span>Как увеличить продажи</span>
-                </button>
                 <button class="menu-item calendar-entry active" type="button" data-view="calendar" data-title="Календарь продаж">
                     <span class="menu-icon">▦</span>
                     <span>Календарь продаж</span>
+                </button>
+                <button class="menu-item" type="button" data-view="add-product" data-title="Добавить товар">
+                    <span class="menu-icon">＋</span>
+                    <span>Добавить товар</span>
                 </button>
                 <button class="menu-item" type="button" data-view="admin" data-title="Управление событиями">
                     <span class="menu-icon">✎</span>
                     <span>Управление событиями</span>
                 </button>
-                <button class="menu-item" type="button" data-view="documents" data-title="Документы">
-                    <span class="menu-icon">▧</span>
-                    <span>Документы</span>
-                </button>
-                <button class="menu-item" type="button" data-view="site" data-title="Сайт-визитка">
-                    <span class="menu-icon">◫</span>
-                    <span>Сайт-визитка</span>
-                </button>
             </nav>
-        </section>
-
-        <section class="side-card compact">
-            <span class="menu-icon">▦</span>
-            <span>Карта возможностей</span>
-        </section>
-
-        <section class="side-card bank-menu">
-            <header>
-                <strong>Банк</strong>
-                <span>⌃</span>
-            </header>
-            <button class="menu-item" type="button" data-view="account" data-title="Расчётный счёт">
-                <span class="menu-icon">₽</span><span>Расчётный счёт</span>
-            </button>
-            <button class="menu-item" type="button" data-view="farmer-card" data-title="Карта фермера">
-                <span class="menu-icon">▬</span><span>Карта фермера</span>
-            </button>
-            <button class="menu-item" type="button" data-view="credit" data-title="Льготное кредитование">
-                <span class="menu-icon">%</span><span>Льготное кредитование</span>
-            </button>
-            <button class="menu-item" type="button" data-view="business" data-title="ДБО “Свой Бизнес”">
-                <span class="menu-icon">▥</span><span>ДБО “Свой Бизнес”</span>
-            </button>
         </section>
     </aside>
 
@@ -191,7 +114,10 @@
                 <div class="calendar-main">
                     <section class="panel assortment-panel">
                         <header class="panel-head">
-                            <h2>Товары для продвижения</h2>
+                            <div>
+                                <h2>Товары для продвижения</h2>
+                                <p>Список показывает товары, которые подходят под события выбранного периода.</p>
+                            </div>
                         </header>
                         <div class="assortment-grid" id="product-grid"></div>
                     </section>
@@ -205,6 +131,44 @@
                     </div>
                     <ul id="recommendations"></ul>
                 </aside>
+            </section>
+        </section>
+
+        <section class="page-view" id="add-product-view">
+            <section class="panel product-create-panel">
+                <header class="panel-head">
+                    <div>
+                        <h2>Добавить товар</h2>
+                        <p>Товар сохранится в базе и появится в ассортименте выбранного фермера.</p>
+                    </div>
+                </header>
+                <form class="custom-product-form product-create-form" id="custom-product-form">
+                    <label>Фермер
+                        <select id="custom-product-farmer" required></select>
+                    </label>
+                    <label>Название
+                        <input id="custom-product-name" type="text" placeholder="Например: Ягодный набор" required>
+                    </label>
+                    <label>Категория
+                        <select id="custom-product-category" required></select>
+                    </label>
+                    <label>Цена, ₽
+                        <input id="custom-product-price" type="number" min="1" value="750" required>
+                    </label>
+                    <label>Остаток
+                        <input id="custom-product-stock" type="number" min="0" value="40" required>
+                    </label>
+                    <label>Продажи/мес.
+                        <input id="custom-product-sales" type="number" min="0" value="12" required>
+                    </label>
+                    <label class="wide">Описание
+                        <textarea id="custom-product-description" rows="3" placeholder="Коротко опишите товар"></textarea>
+                    </label>
+                    <div class="admin-actions wide">
+                        <button class="primary-button" type="submit">Сохранить в БД</button>
+                        <button class="ghost-button" type="button" id="custom-product-reset">Очистить</button>
+                    </div>
+                </form>
             </section>
         </section>
 
@@ -273,15 +237,6 @@
                 <div class="admin-event-list" id="admin-event-list"></div>
             </section>
         </section>
-
-        <section class="page-view" id="placeholder-view">
-            <section class="panel placeholder-panel">
-                <span class="placeholder-icon">▧</span>
-                <h2 id="placeholder-title">Раздел</h2>
-                <p>Этот раздел личного кабинета оставлен заглушкой. В рамках кейса реализован пункт меню “Календарь продаж”.</p>
-                <button class="primary-button" type="button" id="back-to-calendar">Открыть календарь</button>
-            </section>
-        </section>
     </main>
 </div>
 
@@ -317,7 +272,6 @@
 
 <div class="toast" id="toast" hidden></div>
 
-<script src="https://js.puter.com/v2/"></script>
-<script src="app.js?v=49"></script>
+<script src="app.js?v=53"></script>
 </body>
 </html>

@@ -117,7 +117,13 @@ button {
     font-size: 17px;
 }
 
-.top-actions a:first-child {
+.top-actions button {
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+}
+
+.top-actions button:first-child {
     width: 38px;
     height: 38px;
     display: grid;
@@ -287,6 +293,7 @@ button {
     padding: 0 16px;
     text-align: left;
     font-size: 18px;
+    transition: background-color .16s ease, color .16s ease, box-shadow .16s ease, transform .16s ease;
 }
 
 .menu-item[data-view] {
@@ -298,7 +305,9 @@ button {
 }
 
 .menu-item.active {
-    background: var(--green-soft);
+    background: var(--green);
+    color: #fff;
+    box-shadow: 0 10px 22px rgba(38, 185, 32, .24);
 }
 
 .menu-item.active::before {
@@ -309,7 +318,30 @@ button {
     bottom: 10px;
     width: 4px;
     border-radius: 999px;
-    background: var(--green);
+    background: var(--green-dark);
+}
+
+.menu-item.active .menu-icon {
+    background: #fff;
+    color: var(--green-dark);
+}
+
+.menu-item-flash {
+    animation: menu-flash .34s ease;
+}
+
+@keyframes menu-flash {
+    0% {
+        transform: scale(.98);
+        box-shadow: 0 0 0 0 rgba(38, 185, 32, .45);
+    }
+    60% {
+        transform: scale(1.01);
+        box-shadow: 0 0 0 8px rgba(38, 185, 32, .14);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 .menu-icon {
@@ -1079,6 +1111,31 @@ textarea:focus {
     gap: 18px;
 }
 
+.custom-product-form {
+    display: grid;
+    grid-template-columns: minmax(220px, 1.4fr) minmax(180px, 1fr) repeat(3, minmax(110px, .7fr)) auto;
+    gap: 10px;
+    align-items: end;
+    margin: -6px 0 18px;
+    border: 1px solid #d5efd3;
+    border-radius: 18px;
+    background: #f7fcf6;
+    padding: 14px;
+}
+
+.custom-product-form .primary-button {
+    min-width: 150px;
+}
+
+.product-create-form {
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    margin: 0;
+}
+
+.custom-product-form .wide {
+    grid-column: 1 / -1;
+}
+
 .assortment-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1108,7 +1165,7 @@ textarea:focus {
     min-width: 0;
 }
 
-.product-card a {
+.product-card-inner {
     position: relative;
     display: grid;
     grid-template-rows: 128px minmax(116px, auto);
@@ -1119,9 +1176,14 @@ textarea:focus {
     background: #fff;
 }
 
-.product-card.promoted a {
+.product-card.promoted .product-card-inner {
     border-color: var(--green);
     box-shadow: 0 0 0 3px rgba(38, 185, 32, .13);
+}
+
+.product-card.custom .product-card-inner {
+    border-color: #cfe9d0;
+    background: #fbfffb;
 }
 
 .product-badge {
@@ -1167,6 +1229,12 @@ textarea:focus {
 
 .product-card strong {
     margin-top: 4px;
+}
+
+.product-card small {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.35;
 }
 
 .calendar-list {
@@ -1829,105 +1897,121 @@ textarea:focus {
     line-height: 1.35;
 }
 
-.forecast-summary {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 10px;
-}
-
-.forecast-summary strong {
-    color: var(--ink);
-    font-size: 20px;
-    line-height: 1.2;
-}
-
-.forecast-summary span {
-    color: var(--muted);
-    font-size: 14px;
-    font-weight: 800;
-}
-
 .materials-section {
-    background: #fff;
+    border-color: #cfe9d0;
+    background: linear-gradient(180deg, #f8fff7 0%, #ffffff 70%);
 }
 
 .materials-heading {
     margin-bottom: 12px;
 }
 
-.materials-stack {
+.forecast-card {
+    display: grid;
+    gap: 14px;
+}
+
+.forecast-lead {
+    display: grid;
+    gap: 6px;
+    border: 1px solid #cfe9d0;
+    border-radius: 18px;
+    background: #fff;
+    padding: 16px;
+}
+
+.forecast-lead span {
+    color: var(--green-dark);
+    font-size: 13px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.forecast-lead strong {
+    color: var(--ink);
+    font-size: 30px;
+    line-height: 1.1;
+}
+
+.forecast-lead p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+.forecast-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.forecast-metrics article {
+    display: grid;
+    align-content: start;
+    gap: 6px;
+    min-height: 112px;
+    border-radius: 16px;
+    background: #edf8ee;
+    padding: 14px;
+}
+
+.forecast-metrics span,
+.forecast-breakdown span {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.forecast-metrics strong {
+    color: var(--ink);
+    font-size: 24px;
+    line-height: 1.1;
+}
+
+.forecast-metrics small {
+    color: var(--green-dark);
+    font-size: 12px;
+    line-height: 1.35;
+}
+
+.forecast-breakdown {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.forecast-breakdown div {
+    min-width: 0;
+    border: 1px solid #e7ebf1;
+    border-radius: 12px;
+    background: #fff;
+    padding: 10px 12px;
+}
+
+.forecast-breakdown span,
+.forecast-breakdown strong {
+    display: block;
+}
+
+.forecast-breakdown strong {
+    margin-top: 4px;
+    color: var(--ink);
+    font-size: 15px;
+}
+
+.metrics-ai {
     display: grid;
     gap: 10px;
 }
 
-.material-row {
-    min-width: 0;
-    border: 1px solid #e7ebf1;
-    border-radius: 14px;
-    background: #f8fafc;
-    padding: 12px;
+.metrics-analysis-button {
+    justify-self: start;
 }
 
-.forecast-details {
-    display: grid;
-}
-
-.forecast-details summary {
-    width: 100%;
-    max-width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 12px;
-    border: 0;
-    background: transparent;
-    color: var(--muted);
-    padding: 0;
-    font-size: 12px;
-    font-weight: 800;
-    list-style: none;
-    cursor: pointer;
-    text-transform: uppercase;
-}
-
-.forecast-details summary::-webkit-details-marker {
-    display: none;
-}
-
-.forecast-details summary::after {
-    content: "⌄";
-    flex: 0 0 auto;
-    color: var(--green-dark);
-    font-size: 14px;
-    line-height: 1;
-}
-
-.forecast-details[open] summary::after {
-    transform: rotate(180deg);
-}
-
-.forecast-details summary strong {
-    margin-left: auto;
-    color: var(--ink);
-    font-size: 15px;
-    text-align: right;
-    text-transform: none;
-}
-
-.forecast-lines {
-    display: grid;
-    gap: 6px;
-    margin-top: 12px;
-    border-top: 1px solid #e7ebf1;
-    padding-top: 10px;
-}
-
-.forecast-lines small {
-    color: var(--muted);
-    font-size: 12px;
-    line-height: 1.35;
+.metrics-analysis-text {
+    margin: 0;
+    background: #fff;
 }
 
 .social-post-text {
@@ -2284,42 +2368,6 @@ textarea:focus {
     color: var(--muted);
 }
 
-.placeholder-panel {
-    min-height: 360px;
-    display: grid;
-    align-content: center;
-    justify-items: start;
-    gap: 16px;
-}
-
-.placeholder-panel h2,
-.placeholder-panel p {
-    margin: 0;
-}
-
-.placeholder-panel h2 {
-    font-size: 28px;
-}
-
-.placeholder-panel p {
-    max-width: 620px;
-    color: var(--muted);
-    font-size: 18px;
-    line-height: 1.5;
-}
-
-.placeholder-icon {
-    width: 72px;
-    height: 72px;
-    display: grid;
-    place-items: center;
-    border-radius: 22px;
-    background: #edf8ee;
-    color: var(--green);
-    font-size: 30px;
-    font-weight: 800;
-}
-
 @media (max-width: 1180px) {
     .cabinet-shell {
         grid-template-columns: 1fr;
@@ -2337,7 +2385,8 @@ textarea:focus {
     .calendar-layout,
     .planning-grid,
     .admin-form,
-    .admin-boost-row {
+    .admin-boost-row,
+    .custom-product-form {
         grid-template-columns: 1fr;
     }
 
@@ -2345,18 +2394,10 @@ textarea:focus {
         width: 100%;
     }
 
-    .forecast-details summary {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .forecast-details summary strong {
-        margin-left: 0;
-        text-align: left;
-    }
-
     .seasonal-map,
-    .priority-list {
+    .priority-list,
+    .forecast-metrics,
+    .forecast-breakdown {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
@@ -2413,6 +2454,8 @@ textarea:focus {
 	    .calendar-summary,
 	    .seasonal-map,
 	    .priority-list,
+	    .forecast-metrics,
+	    .forecast-breakdown,
 	    .tool-form,
 	    .side-nav {
 	        grid-template-columns: 1fr;

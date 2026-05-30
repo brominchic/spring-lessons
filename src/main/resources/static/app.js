@@ -26,6 +26,7 @@ const state = {
     actuals: loadCampaignActuals(),
     history: loadCalendarHistory(),
     generatedSocialTexts: loadGeneratedSocialTexts(),
+    createdProductIds: new Set(),
     calculator: {
         eventKey: '',
         discountPercent: 10,
@@ -38,51 +39,43 @@ const state = {
 
 const marketplaceChannelActions = {
     'Витрина': {
-        label: 'Витрина svoe-rodnoe.ru',
-        description: 'Обновить название, описание, фото, скидку или промокод в карточке товара.',
-        buttonLabel: 'Обновить витрину',
+        label: 'Витрина продаж',
+        description: 'Идея для карточки товара: обновить название, описание, фото, скидку или промокод.',
         doneLabel: 'Витрина обновлена'
     },
     'Чат с покупателем': {
         label: 'Чат фермера с покупателем',
-        description: 'Отправить покупателям короткое сообщение во внутреннем чате платформы.',
-        buttonLabel: 'Написать в чат',
+        description: 'Идея сообщения: коротко связать товар, повод и выгоду для покупателя.',
         doneLabel: 'Сообщение предложено'
     },
     'Блог': {
-        label: 'Блог «Своё Родное»',
-        description: 'Подготовить тему или статью от фермера под событие и товар.',
-        buttonLabel: 'Выложить пост',
+        label: 'Блог',
+        description: 'Идея для блога: подготовить тему или статью от фермера под событие и товар.',
         doneLabel: 'Пост предложен'
     },
     'Рецепты': {
-        label: 'Рецепты «Своё Родное»',
-        description: 'Предложить рецепт, где товар выступает главным ингредиентом.',
-        buttonLabel: 'Предложить рецепт',
+        label: 'Рецепты',
+        description: 'Идея рецепта: показать блюдо, где товар выступает главным ингредиентом.',
         doneLabel: 'Рецепт предложен'
     },
     'Сторисы': {
         label: 'Сторисы с фото и текстом',
-        description: 'Собрать сторис с фото и текстом для сайта и приложения РСХБ.',
-        buttonLabel: 'Добавить сторис',
+        description: 'Идея сторис: собрать короткую серию с фото, выгодой и промокодом.',
         doneLabel: 'Сторис предложен'
     },
     'E-mail подборка': {
         label: 'Ежемесячная e-mail рассылка',
-        description: 'Добавить товар в подборку рекомендаций для покупателей.',
-        buttonLabel: 'Предложить e-mail',
+        description: 'Идея рассылки: включить товар в тематическую подборку рекомендаций.',
         doneLabel: 'E-mail предложен'
     },
     'Пуш': {
         label: 'Пуш-уведомления',
-        description: 'Отправить короткое сообщение в приложении с поводом и оффером.',
-        buttonLabel: 'Предложить пуш-уведомление',
+        description: 'Идея пуша: коротко показать повод, товар и выгоду.',
         doneLabel: 'Пуш предложен'
     },
     'Соцсети': {
-        label: 'Соцсети и мессенджеры «Своё Родное»',
-        description: 'Подготовить пост или сообщение в каналах маркетплейса.',
-        buttonLabel: 'Выложить в соцсети',
+        label: 'Соцсети и мессенджеры',
+        description: 'Идея поста: подготовить текст для соцсетей или мессенджеров.',
         doneLabel: 'Публикация предложена'
     }
 };
@@ -217,6 +210,7 @@ function init() {
     bindNavigation();
     bindFarmerPicker();
     bindCalendarControls();
+    bindCustomProductForm();
     bindAdminControls();
     bindAdviceActions();
     syncTrainingInviteState();
@@ -229,15 +223,26 @@ function init() {
     showView(window.location.hash.replace('#', '') || 'calendar');
 }
 
+function bindCustomProductForm() {
+    renderCustomProductCategoryOptions();
+    document.getElementById('custom-product-reset').addEventListener('click', resetCustomProductForm);
+    document.getElementById('custom-product-form').addEventListener('submit', addCustomProduct);
+}
+
 function bindNavigation() {
     document.querySelector('.brand').addEventListener('click', (event) => {
         event.preventDefault();
         showView('calendar');
     });
     document.querySelectorAll('[data-view]').forEach((button) => {
-        button.addEventListener('click', () => showView(button.dataset.view));
+        button.addEventListener('click', () => {
+            setActiveMenuItem(button.dataset.view);
+            button.classList.remove('menu-item-flash');
+            void button.offsetWidth;
+            button.classList.add('menu-item-flash');
+            showView(button.dataset.view);
+        });
     });
-    document.getElementById('back-to-calendar').addEventListener('click', () => showView('calendar'));
 }
 
 function bindFarmerPicker() {
@@ -326,18 +331,6 @@ function resetPeriodControls() {
 
 function bindAdviceActions() {
     document.addEventListener('click', (event) => {
-        const adviceButton = event.target.closest('[data-apply-action]');
-        if (adviceButton) {
-            applyAdvice(adviceButton);
-            return;
-        }
-
-        const cancelButton = event.target.closest('[data-cancel-action]');
-        if (cancelButton) {
-            cancelAdvice(cancelButton);
-            return;
-        }
-
         const actualButton = event.target.closest('[data-save-actual]');
         if (actualButton) {
             saveActuals(actualButton);
@@ -347,6 +340,18 @@ function bindAdviceActions() {
         const generateSocialButton = event.target.closest('[data-generate-social-text]');
         if (generateSocialButton) {
             generateSocialText(generateSocialButton);
+            return;
+        }
+
+        const aiIdeaButton = event.target.closest('[data-generate-ai-idea]');
+        if (aiIdeaButton) {
+            generateAiIdea(aiIdeaButton);
+            return;
+        }
+
+        const metricsButton = event.target.closest('[data-analyze-metrics]');
+        if (metricsButton) {
+            analyzeMetrics(metricsButton);
             return;
         }
 
@@ -426,34 +431,44 @@ async function showView(view) {
     const selectedButton = document.querySelector(`[data-view="${view}"]`);
     const activeView = selectedButton == null ? 'calendar' : view;
     const isCalendar = activeView === 'calendar';
+    const isAddProduct = activeView === 'add-product';
     const isAdmin = activeView === 'admin';
     const title = isCalendar ? 'Календарь продаж' : selectedButton.dataset.title;
     const subtitle = isCalendar
             ? 'Планируйте события, акции и публикации под реальные товары фермера'
-            : isAdmin
-                    ? 'Управляйте праздниками, трендами, локальными событиями и коэффициентами'
-            : 'Раздел пока недоступен в демо-версии личного кабинета';
+            : isAddProduct
+                    ? 'Создавайте товар в базе и сразу используйте его в календаре'
+                    : 'Управляйте праздниками, трендами, локальными событиями и коэффициентами';
 
     document.getElementById('calendar-view').classList.toggle('active', isCalendar);
+    document.getElementById('add-product-view').classList.toggle('active', isAddProduct);
     document.getElementById('admin-view').classList.toggle('active', isAdmin);
-    document.getElementById('placeholder-view').classList.toggle('active', !isCalendar && !isAdmin);
-    document.querySelectorAll('.menu-item[data-view]').forEach((button) => {
-        button.classList.toggle('active', button.dataset.view === activeView);
-    });
+    setActiveMenuItem(activeView);
 
     document.getElementById('page-title').textContent = title;
     document.getElementById('page-subtitle').textContent = subtitle;
-    document.getElementById('placeholder-title').textContent = title;
     window.history.replaceState(null, '', `#${activeView}`);
 
     if (isCalendar && !state.calendarLoaded) {
         state.calendarLoaded = true;
         await loadMarketingPage();
         showOnboardingIfNeeded();
+    } else if (isAddProduct) {
+        await ensureFarmersLoaded();
+        renderCustomProductFarmerOptions();
+        renderCustomProductCategoryOptions();
     } else if (isAdmin) {
         renderAdminForm();
         await loadAdminEvents();
     }
+}
+
+function setActiveMenuItem(activeView) {
+    document.querySelectorAll('.menu-item[data-view]').forEach((button) => {
+        const isActive = button.dataset.view === activeView;
+        button.classList.toggle('active', isActive);
+        button.setAttribute('aria-current', isActive ? 'page' : 'false');
+    });
 }
 
 async function loadMarketingPage() {
@@ -467,6 +482,12 @@ async function loadFarmers() {
     state.farmers = await fetchJson(`${apiBase}/farmers`);
     renderFarmerMenu();
     updateFarmerAvatar();
+}
+
+async function ensureFarmersLoaded() {
+    if (!state.farmers.length) {
+        await loadFarmers();
+    }
 }
 
 function renderFarmerMenu() {
@@ -584,7 +605,12 @@ async function loadCalendar() {
 function renderAssortment(items) {
     const grid = document.getElementById('product-grid');
     const eventByProduct = highlightedEventsByProduct();
-    const visibleItems = items.filter((item) => eventByProduct.has(item.name));
+    const selectedCategory = document.getElementById('category').value;
+    const visibleItems = items.filter((item) => {
+        const isHighlighted = eventByProduct.has(item.name);
+        const isCreatedVisible = state.createdProductIds.has(String(item.productId)) && (!selectedCategory || item.category === selectedCategory);
+        return isHighlighted || isCreatedVisible;
+    });
     grid.onscroll = null;
     if (!visibleItems.length) {
         grid.innerHTML = '<p class="empty-state">Для выбранного фермера пока нет товаров.</p>';
@@ -615,19 +641,95 @@ function renderAssortment(items) {
 
 function productCardTemplate(item, eventByProduct) {
     const event = eventByProduct.get(item.name);
+    const isCreated = state.createdProductIds.has(String(item.productId));
+    const badge = event ? shortText(event.title, 28) : isCreated ? 'Добавлен в БД' : '';
     return `
-        <article class="product-card ${event ? 'promoted' : ''}">
-            <a href="${escapeHtml(item.urlProduct)}" target="_blank" rel="noreferrer">
-                ${event ? `<span class="product-badge">${escapeHtml(shortText(event.title, 28))}</span>` : ''}
+        <article class="product-card ${event ? 'promoted' : ''} ${isCreated ? 'custom' : ''}">
+            <div class="product-card-inner">
+                ${badge ? `<span class="product-badge">${escapeHtml(badge)}</span>` : ''}
                 <div class="product-image" style="background-image: url('${categoryImages[item.category] || categoryImages['Бакалея']}')"></div>
                 <div>
                     <h3>${escapeHtml(shortText(item.name, 42))}</h3>
                     <p>${escapeHtml(item.category)}</p>
                     <strong>${formatRub(item.price)}</strong>
+                    ${isCreated ? `<small>Остаток ${escapeHtml(item.stock)} шт. · ${escapeHtml(item.monthlySales)} продаж/мес.</small>` : ''}
                 </div>
-            </a>
+            </div>
         </article>
     `;
+}
+
+async function addCustomProduct(event) {
+    event.preventDefault();
+    const name = document.getElementById('custom-product-name').value.trim();
+    const category = document.getElementById('custom-product-category').value;
+    const organizationId = Number(document.getElementById('custom-product-farmer').value);
+    if (!name || !category || !organizationId) {
+        return;
+    }
+
+    const savedProduct = await sendJson(`${apiBase}/assortment`, 'POST', {
+        organizationId,
+        name,
+        category,
+        price: Math.max(1, Math.round(numberOrZero(document.getElementById('custom-product-price').value))),
+        stock: Math.max(0, Math.round(numberOrZero(document.getElementById('custom-product-stock').value))),
+        monthlySales: Math.max(0, Math.round(numberOrZero(document.getElementById('custom-product-sales').value))),
+        productDescription: document.getElementById('custom-product-description').value.trim(),
+        tags: [category, name]
+    });
+
+    state.createdProductIds.add(String(savedProduct.productId));
+    state.selectedFarmerId = String(savedProduct.organizationId);
+    updateFarmerAvatar();
+    renderCustomProductCategoryOptions();
+    resetCustomProductForm();
+    await loadAssortment();
+    if (state.calendarLoaded) {
+        await loadCalendar();
+    }
+    showToast('Товар сохранён в БД');
+}
+
+function renderCustomProductCategoryOptions() {
+    const select = document.getElementById('custom-product-category');
+    if (!select) {
+        return;
+    }
+    const categories = customProductCategories();
+    select.innerHTML = categories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join('');
+}
+
+function customProductCategories() {
+    const categories = new Set([
+        ...Object.keys(categoryImages),
+        ...state.assortment.map((item) => item.category),
+        ...(state.calendar?.categories || [])
+    ]);
+    return [...categories].sort((a, b) => a.localeCompare(b, 'ru'));
+}
+
+function renderCustomProductFarmerOptions() {
+    const select = document.getElementById('custom-product-farmer');
+    if (!select) {
+        return;
+    }
+    select.innerHTML = state.farmers.map((farmer) => `
+        <option value="${escapeHtml(farmer.organizationId)}">${escapeHtml(farmer.shopName)} · ${escapeHtml(farmer.region)}</option>
+    `).join('');
+    if (state.selectedFarmerId && state.farmers.some((farmer) => String(farmer.organizationId) === String(state.selectedFarmerId))) {
+        select.value = state.selectedFarmerId;
+    }
+}
+
+function resetCustomProductForm() {
+    const form = document.getElementById('custom-product-form');
+    form.reset();
+    document.getElementById('custom-product-price').value = '750';
+    document.getElementById('custom-product-stock').value = '40';
+    document.getElementById('custom-product-sales').value = '12';
+    renderCustomProductFarmerOptions();
+    renderCustomProductCategoryOptions();
 }
 
 function renderCalendar(calendar) {
@@ -694,12 +796,13 @@ function renderEventActions(event, groups) {
                         ${discountPromoControls(event)}
                     </article>
                     <article class="event-action-mini">
-                        <h4>Действие на витрине</h4>
+                        <h4>Идея для описания товара</h4>
                         ${detailsText(textWithCurrentPromoSettings(event.marketplaceAction, event))}
-                        ${adviceControls(adviceKey(event, 'storefront'), 'Применить на витрине', 'Витрина обновлена')}
                     </article>
                 </div>
             </section>
+
+            ${aiContentIdeasSection(event)}
 
             ${campaignDecisionSection(event)}
 
@@ -708,25 +811,77 @@ function renderEventActions(event, groups) {
                     <span class="action-icon">↗</span>
                     <h3>Прогноз</h3>
                 </header>
-                <div class="materials-stack">
-                    <details class="forecast-details material-row">
-                        <summary>
-                            <span>Прогноз</span>
-                            <strong>${forecast.expectedOrders} заказов · ROI ${forecast.roiPercent}%</strong>
-                        </summary>
-                        <div class="forecast-lines">
-                            <small>${forecastDemandLine(event)}</small>
-                            <small>${forecastEconomicsLine(event)}</small>
-                            <small>${forecastCostLine(event)}</small>
-                            <small>${escapeHtml(event.evidence)}</small>
-                        </div>
-                    </details>
+                <div class="forecast-card">
+                    <div class="forecast-lead">
+                        <span>${forecastConclusion(forecast)}</span>
+                        <strong>${forecast.expectedOrders} заказов</strong>
+                        <p>${escapeHtml(event.evidence)}</p>
+                    </div>
+                    <div class="forecast-metrics">
+                        <article>
+                            <span>Рост спроса</span>
+                            <strong>${signedPercent(forecast.upliftPercent)}</strong>
+                            <small>база ${forecast.baselineOrders}, сезон ${forecast.seasonalOrders}</small>
+                        </article>
+                        <article>
+                            <span>ROI акции</span>
+                            <strong>${forecast.roiPercent}%</strong>
+                            <small>${forecast.roiPercent >= 0 ? 'акция окупается' : 'нужно снизить затраты'}</small>
+                        </article>
+                        <article>
+                            <span>Остаток</span>
+                            <strong>${forecast.stock} шт.</strong>
+                            <small>${forecast.stockLimited ? 'спрос выше остатка' : 'хватает под прогноз'}</small>
+                        </article>
+                    </div>
+                    <div class="forecast-breakdown">
+                        <div><span>Цена</span><strong>${formatRubSafe(event.productPrice)}</strong></div>
+                        <div><span>Скидка</span><strong>${forecast.discountPercent}%</strong></div>
+                        <div><span>Маржа</span><strong>${forecast.marginPercent}%</strong></div>
+                        <div><span>Выручка</span><strong>${formatRubSafe(forecast.grossRevenue)}</strong></div>
+                        <div><span>Валовая прибыль</span><strong>${formatRubSafe(forecast.grossProfit)}</strong></div>
+                        <div><span>Затраты</span><strong>${formatRubSafe(forecast.marketingCost)}</strong></div>
+                    </div>
+                    <div class="metrics-ai" data-metrics-analysis-surface>
+                        <p class="social-post-text metrics-analysis-text" data-generated-metrics-analysis hidden></p>
+                        <button class="generate-text-button metrics-analysis-button" type="button"
+                                data-analyze-metrics
+                                data-metric-event-title="${escapeHtml(event.title)}"
+                                data-metric-event-type="${escapeHtml(event.eventType)}"
+                                data-metric-product="${escapeHtml(event.product)}"
+                                data-metric-category="${escapeHtml(event.category)}"
+                                data-metric-baseline-orders="${escapeHtml(forecast.baselineOrders)}"
+                                data-metric-seasonal-orders="${escapeHtml(forecast.seasonalOrders)}"
+                                data-metric-expected-orders="${escapeHtml(forecast.expectedOrders)}"
+                                data-metric-uplift="${escapeHtml(forecast.upliftPercent)}"
+                                data-metric-roi="${escapeHtml(forecast.roiPercent)}"
+                                data-metric-stock="${escapeHtml(forecast.stock)}"
+                                data-metric-stock-limited="${escapeHtml(forecast.stockLimited)}"
+                                data-metric-revenue="${escapeHtml(forecast.grossRevenue)}"
+                                data-metric-profit="${escapeHtml(forecast.grossProfit)}"
+                                data-metric-cost="${escapeHtml(forecast.marketingCost)}">
+                            Проанализировать метрики
+                        </button>
+                    </div>
                 </div>
             </section>
 
             ${historySection(event)}
         </div>
     `;
+}
+
+function forecastConclusion(forecast) {
+    if (forecast.stockLimited) {
+        return 'Спрос есть, но продажи ограничит остаток';
+    }
+    if (forecast.roiPercent >= 80 && forecast.upliftPercent > 0) {
+        return 'Хороший кандидат для запуска';
+    }
+    if (forecast.roiPercent < 0) {
+        return 'Запускать осторожно';
+    }
+    return 'Прогноз стабильный';
 }
 
 function forecastDemandLine(event) {
@@ -1310,7 +1465,7 @@ function eventAssortmentItem(event) {
 }
 
 function bundleKind(event, item) {
-    const value = bundleText([event.category, event.product, item?.category, item?.name, item?.productDescription, item?.urlProduct]);
+    const value = bundleText([event.category, event.product, item?.category, item?.name, item?.productDescription]);
     if (containsAny(value, ['говяд', 'свинин', 'баранин', 'курин', 'индей', 'мясн', 'мясо', 'стейк', 'ростбиф', 'тушен', 'колбас', 'mjas'])) {
         return 'meat';
     }
@@ -1646,7 +1801,7 @@ function assortmentForBundle(event, mainItem) {
 }
 
 function bundleItemScore(item, slot, event, mainItem, seed) {
-    const value = bundleText([item.category, item.name, item.productDescription, item.urlProduct]);
+    const value = bundleText([item.category, item.name, item.productDescription]);
     if (slot.exclude && slot.exclude.some((word) => value.includes(word))) {
         return 0;
     }
@@ -1792,7 +1947,7 @@ async function generateSocialText(button) {
     } catch (error) {
         console.warn(error);
         button.textContent = initialLabel;
-        showToast('Не удалось сгенерировать пост');
+        showToast(error.message || 'Не удалось сгенерировать пост');
     } finally {
         button.disabled = false;
         button.removeAttribute('aria-busy');
@@ -1800,15 +1955,90 @@ async function generateSocialText(button) {
 }
 
 async function requestSocialPostText(button) {
-    if (!window.puter?.ai?.chat) {
-        throw new Error('Puter AI is not loaded');
+    try {
+        const response = await sendJson(`${apiBase}/ai/social-post`, 'POST', {
+            prompt: socialPostPrompt(button)
+        });
+        const text = normalizeAiText(response?.text);
+        if (!text) {
+            throw new Error('AI returned empty text');
+        }
+        return text;
+    } catch (error) {
+        return fallbackSocialPost(button);
     }
-    const response = await window.puter.ai.chat(socialPostPrompt(button));
-    const text = normalizeAiText(response);
-    if (!text) {
-        throw new Error('AI returned empty text');
+}
+
+async function analyzeMetrics(button) {
+    const textNode = button.closest('[data-metrics-analysis-surface]')?.querySelector('[data-generated-metrics-analysis]');
+    const initialLabel = button.textContent.trim() || 'Проанализировать метрики';
+    button.disabled = true;
+    button.setAttribute('aria-busy', 'true');
+    button.textContent = 'Анализируем...';
+
+    try {
+        const response = await sendJson(`${apiBase}/ai/metrics-analysis`, 'POST', {
+            prompt: metricsAnalysisPrompt(button)
+        });
+        const text = normalizeAiText(response?.text);
+        if (!text) {
+            throw new Error('AI returned empty analysis');
+        }
+        if (textNode) {
+            textNode.textContent = text;
+            textNode.hidden = false;
+        }
+        button.textContent = 'Обновить анализ';
+        showToast('Метрики проанализированы');
+    } catch (error) {
+        console.warn(error);
+        button.textContent = initialLabel;
+        showToast(error.message || 'Не удалось проанализировать метрики');
+    } finally {
+        button.disabled = false;
+        button.removeAttribute('aria-busy');
     }
-    return text;
+}
+
+async function generateAiIdea(button) {
+    const textNode = button.closest('[data-ai-idea-surface]')?.querySelector('[data-generated-ai-idea]');
+    const initialLabel = button.textContent.trim() || 'Сгенерировать';
+    button.disabled = true;
+    button.setAttribute('aria-busy', 'true');
+    button.textContent = 'Генерируем...';
+
+    try {
+        const text = await requestAiIdea(button);
+        if (textNode) {
+            textNode.textContent = text;
+            textNode.hidden = false;
+        }
+        button.textContent = 'Сгенерировать другой вариант';
+        showToast('Идея готова');
+    } catch (error) {
+        console.warn(error);
+        if (textNode) {
+            textNode.textContent = fallbackAiIdea(button);
+            textNode.hidden = false;
+        }
+        button.textContent = initialLabel;
+        showToast('Показана локальная идея');
+    } finally {
+        button.disabled = false;
+        button.removeAttribute('aria-busy');
+    }
+}
+
+async function requestAiIdea(button) {
+    try {
+        const response = await sendJson(`${apiBase}/ai/social-post`, 'POST', {
+            prompt: aiIdeaPrompt(button)
+        });
+        const text = normalizeAiText(response?.text);
+        return text || fallbackAiIdea(button);
+    } catch (error) {
+        return fallbackAiIdea(button);
+    }
 }
 
 function socialPostPrompt(button) {
@@ -1831,6 +2061,73 @@ function socialPostPrompt(button) {
 ROI: ${numberOrZero(button.dataset.socialRoi)}%
 ${previousText ? `Предыдущий вариант: ${previousText}\nНе повторяй его, сделай другой заход.` : ''}
 Сделай готовый пост для покупателей.
+`.trim();
+}
+
+function aiIdeaPrompt(button) {
+    const kind = button.dataset.aiKind || 'post';
+    return `
+Ты маркетолог фермерского ассортимента. Пиши по-русски, без markdown и эмодзи.
+Дай готовую практичную идею для формата: ${kind}.
+Если формат "channels", предложи 3 канала продвижения под целевую аудиторию и объясни почему.
+Если формат "recipe", предложи рецепт или сценарий блюда без точных граммовок.
+Если формат "blog", предложи тему, структуру и главный тезис.
+Если формат "post", дай текст поста 2-4 предложения.
+
+Событие: ${button.dataset.aiEventTitle}
+Товар: ${button.dataset.aiProduct}
+Категория: ${button.dataset.aiCategory}
+Целевая аудитория: ${button.dataset.aiAudience}
+Промокод: ${button.dataset.aiCode}
+Скидка: ${numberOrZero(button.dataset.aiDiscount)}%
+Прогноз заказов: ${numberOrZero(button.dataset.aiForecastOrders)}
+ROI: ${numberOrZero(button.dataset.aiRoi)}%
+`.trim();
+}
+
+function fallbackSocialPost(button) {
+    return `К событию "${button.dataset.socialEventTitle || 'акция'}" предложите ${button.dataset.socialProduct || 'фермерский товар'} со скидкой ${numberOrZero(button.dataset.socialDiscount)}%. Используйте промокод ${button.dataset.socialCode || 'PROMO'} и подчеркните свежесть, понятный состав и пользу для покупателя.`;
+}
+
+function fallbackAiIdea(button) {
+    const product = button.dataset.aiProduct || 'товар';
+    const eventTitle = button.dataset.aiEventTitle || 'событие';
+    const audience = button.dataset.aiAudience || 'покупатели категории';
+    const code = button.dataset.aiCode || 'PROMO';
+    const discount = numberOrZero(button.dataset.aiDiscount);
+    switch (button.dataset.aiKind) {
+        case 'blog':
+            return `Идея для блога: "${product} к событию ${eventTitle}". Структура: почему товар подходит к поводу, как его выбрать, с чем сочетать, какой набор собрать. В конце добавить промокод ${code} на скидку ${discount}% для аудитории "${audience}".`;
+        case 'recipe':
+            return `Идея рецепта: сезонное блюдо с товаром "${product}". Показать простой сценарий: подготовка ингредиентов, главный шаг с товаром, подача к событию "${eventTitle}". В тексте мягко добавить промокод ${code} на ${discount}%.`;
+        case 'channels':
+            return `Каналы под аудиторию "${audience}": 1. Соцсети для быстрого эмоционального повода и фото товара. 2. Пуш для короткого напоминания о скидке ${discount}% и промокоде ${code}. 3. E-mail подборка для объяснения пользы товара "${product}" и добавления набора к событию "${eventTitle}".`;
+        default:
+            return `Пост: к событию "${eventTitle}" предложите "${product}" со скидкой ${discount}% по промокоду ${code}. Сделайте акцент на натуральности, понятном составе и том, как товар помогает быстро собрать удачную покупку под повод.`;
+    }
+}
+
+function metricsAnalysisPrompt(button) {
+    return `
+Ты аналитик маркетинговых акций для фермерского ассортимента.
+Пиши по-русски, без markdown и без эмодзи.
+Дай 3 коротких вывода: стоит ли запускать акцию, главный риск, что улучшить.
+Не выдумывай данных, используй только метрики ниже.
+
+Событие: ${button.dataset.metricEventTitle}
+Тип события: ${button.dataset.metricEventType}
+Товар: ${button.dataset.metricProduct}
+Категория: ${button.dataset.metricCategory}
+Базовые заказы: ${numberOrZero(button.dataset.metricBaselineOrders)}
+Сезонный спрос: ${numberOrZero(button.dataset.metricSeasonalOrders)}
+Прогноз заказов: ${numberOrZero(button.dataset.metricExpectedOrders)}
+Рост спроса: ${numberOrZero(button.dataset.metricUplift)}%
+ROI: ${numberOrZero(button.dataset.metricRoi)}%
+Остаток: ${numberOrZero(button.dataset.metricStock)} шт.
+Ограничение остатком: ${button.dataset.metricStockLimited === 'true' ? 'да' : 'нет'}
+Выручка: ${numberOrZero(button.dataset.metricRevenue)} ₽
+Валовая прибыль: ${numberOrZero(button.dataset.metricProfit)} ₽
+Затраты: ${numberOrZero(button.dataset.metricCost)} ₽
 `.trim();
 }
 
@@ -1880,40 +2177,6 @@ function historyActionLabel(actionType) {
     }[actionType] || 'Изменение';
 }
 
-function adviceControls(key, label, doneLabel) {
-    return `
-        <div class="advice-controls">
-            ${adviceButton(key, label, doneLabel)}
-            ${cancelAdviceButton(key)}
-        </div>
-    `;
-}
-
-function adviceButton(key, label, doneLabel) {
-    const applied = Boolean(state.appliedActions[key]);
-    return `
-        <button class="apply-advice ${applied ? 'applied' : ''}" type="button"
-                data-apply-action="${escapeHtml(key)}"
-                data-apply-label="${escapeHtml(label)}"
-                data-apply-done="${escapeHtml(doneLabel)}"
-                aria-disabled="${applied}">
-            <span>${applied ? '✓' : '+'}</span>
-            ${escapeHtml(applied ? doneLabel : label)}
-        </button>
-    `;
-}
-
-function cancelAdviceButton(key) {
-    const applied = Boolean(state.appliedActions[key]);
-    return `
-        <button class="cancel-advice" type="button"
-                data-cancel-action="${escapeHtml(key)}"
-                ${applied ? '' : 'hidden'}>
-            Отменить
-        </button>
-    `;
-}
-
 function adviceKey(event, action) {
     const farmerScope = state.selectedFarmerId || 'all-farmers';
     return `${farmerScope}:${action}:${event.date}:${event.title}:${event.product}`;
@@ -1947,7 +2210,6 @@ function currentDiscountPercent(event) {
 }
 
 function discountPromoControls(event) {
-    const discountKey = adviceKey(event, 'discount');
     const promoCodeKey = promoKey(event);
     const discountValueKey = discountPercentKey(event);
     const code = currentPromoCode(event);
@@ -1971,8 +2233,6 @@ function discountPromoControls(event) {
                        step="1"
                        data-promo-discount-input="${escapeHtml(discountValueKey)}">
             </label>
-            ${adviceButton(discountKey, 'Применить скидку', 'Скидка применена')}
-            ${cancelAdviceButton(discountKey)}
         </div>
     `;
 }
@@ -2012,24 +2272,6 @@ function textWithCurrentPromoSettings(text, event) {
         result = `${result} Промокод ${code}, скидка ${discount}%.`;
     }
     return result;
-}
-
-function savePromoSettingsForDiscount(button) {
-    const controls = button.closest('.promo-code-controls');
-    const promoInput = controls?.querySelector('[data-promo-code-input]');
-    const discountInput = controls?.querySelector('[data-promo-discount-input]');
-    if (!promoInput && !discountInput) {
-        return true;
-    }
-    if (promoInput && !savePromoCodeInput(promoInput, false)) {
-        return false;
-    }
-    if (discountInput && !saveDiscountPercentInput(discountInput, false)) {
-        return false;
-    }
-
-    persistPromotionSettingsFromControls(controls);
-    return true;
 }
 
 function savePromoCodeInput(input, persist = true) {
@@ -2100,59 +2342,6 @@ function persistPromotionSettingsFromControls(controls) {
             }
         })
         .catch((error) => console.warn('Promotion settings were not saved to DB', error));
-}
-
-function persistActionState(actionKey, applied) {
-    sendJson(`${apiBase}/state/actions`, 'PUT', {
-        organizationId: selectedOrganizationId(),
-        actionKey,
-        applied
-    })
-        .then((payload) => {
-            applyCalendarState(payload);
-            if (state.calendar) {
-                renderCalendar(state.calendar);
-            }
-        })
-        .catch((error) => console.warn('Action state was not saved to DB', error));
-}
-
-function applyAdvice(button) {
-    if (button.classList.contains('applied')) {
-        return;
-    }
-    const savedPromoSettings = savePromoSettingsForDiscount(button);
-    if (savedPromoSettings === false) {
-        return;
-    }
-    const key = button.dataset.applyAction;
-    state.appliedActions[key] = true;
-    saveAppliedActions();
-    persistActionState(key, true);
-
-    button.innerHTML = `<span>✓</span>${escapeHtml(button.dataset.applyDone)}`;
-    button.classList.add('applied');
-    button.setAttribute('aria-disabled', 'true');
-    const cancelButton = button.parentElement.querySelector('[data-cancel-action]');
-    if (cancelButton) {
-        cancelButton.hidden = false;
-    }
-    showToast(button.dataset.applyDone);
-}
-
-function cancelAdvice(button) {
-    const key = button.dataset.cancelAction;
-    delete state.appliedActions[key];
-    saveAppliedActions();
-    persistActionState(key, false);
-
-    const controls = button.parentElement;
-    const applyButton = controls.querySelector('[data-apply-action]');
-    applyButton.innerHTML = `<span>+</span>${escapeHtml(applyButton.dataset.applyLabel)}`;
-    applyButton.classList.remove('applied');
-    applyButton.setAttribute('aria-disabled', 'false');
-    button.hidden = true;
-    showToast('Совет отменен');
 }
 
 function saveActuals(button) {
@@ -2234,8 +2423,10 @@ function csvCell(value) {
 function fillCategoryFilter(categories) {
     const select = document.getElementById('category');
     const selected = select.value;
-    select.innerHTML = '<option value="">Все категории</option>' + categories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join('');
-    select.value = categories.includes(selected) ? selected : '';
+    const mergedCategories = [...new Set([...(categories || []), ...state.assortment.map((item) => item.category)])].sort((a, b) => a.localeCompare(b, 'ru'));
+    select.innerHTML = '<option value="">Все категории</option>' + mergedCategories.map((category) => `<option value="${escapeHtml(category)}">${escapeHtml(category)}</option>`).join('');
+    select.value = mergedCategories.includes(selected) ? selected : '';
+    renderCustomProductCategoryOptions();
 }
 
 function highlightedEventsByProduct() {
@@ -2281,7 +2472,7 @@ function renderChannelActionsSection(event, channels) {
         <section class="event-action-section">
             <header class="event-action-heading">
                 <span class="action-icon">▦</span>
-                <h3>Действия в каналах</h3>
+                <h3>Идеи для контента</h3>
             </header>
             ${channelActions}
         </section>
@@ -2299,12 +2490,51 @@ function channelActionCards(event, channels) {
                     <article class="event-action-mini channel-action-card">
                         <h4>${escapeHtml(action.label)}</h4>
                         ${detailsText(actionDescription(action, event))}
-                        ${adviceControls(adviceKey(event, `channel:${channel}`), action.buttonLabel, action.doneLabel)}
                     </article>
                 `;
             }).join('')}
             ${socialPostGeneratorCard(event)}
         </div>
+    `;
+}
+
+function aiContentIdeasSection(event) {
+    const forecast = eventForecast(event);
+    const segment = segmentRecommendation(event);
+    const ideas = [
+        {kind: 'post', title: 'Идея поста', button: 'Сгенерировать пост'},
+        {kind: 'blog', title: 'Идея для блога', button: 'Сгенерировать блог'},
+        {kind: 'recipe', title: 'Идея рецепта', button: 'Сгенерировать рецепт'},
+        {kind: 'channels', title: 'Каналы под аудиторию', button: 'Подобрать каналы'}
+    ];
+    return `
+        <section class="event-action-section">
+            <header class="event-action-heading">
+                <span class="action-icon">★</span>
+                <h3>Генерация идей</h3>
+            </header>
+            <div class="channel-action-grid">
+                ${ideas.map((idea) => `
+                    <article class="event-action-mini channel-action-card ai-idea-card" data-ai-idea-surface>
+                        <h4>${escapeHtml(idea.title)}</h4>
+                        <p class="social-post-text" data-generated-ai-idea hidden></p>
+                        <button class="generate-text-button social-post-generate" type="button"
+                                data-generate-ai-idea
+                                data-ai-kind="${escapeHtml(idea.kind)}"
+                                data-ai-event-title="${escapeHtml(event.title)}"
+                                data-ai-product="${escapeHtml(event.product)}"
+                                data-ai-category="${escapeHtml(event.category)}"
+                                data-ai-audience="${escapeHtml(segment.title)}"
+                                data-ai-code="${escapeHtml(currentPromoCode(event))}"
+                                data-ai-discount="${escapeHtml(currentDiscountPercent(event))}"
+                                data-ai-forecast-orders="${escapeHtml(forecast.expectedOrders)}"
+                                data-ai-roi="${escapeHtml(forecast.roiPercent)}">
+                            ${escapeHtml(idea.button)}
+                        </button>
+                    </article>
+                `).join('')}
+            </div>
+        </section>
     `;
 }
 
@@ -2314,7 +2544,7 @@ function socialPostGeneratorCard(event) {
     return `
         <article class="event-action-mini channel-action-card social-generator-card" data-social-text-surface>
             <h4>Пост для соцсетей</h4>
-            ${detailsText('Нейронка соберет готовый текст по товару, событию и промокоду без API-ключа.')}
+            ${detailsText('GigaChat соберет готовый текст по товару, событию и промокоду.')}
             <p class="social-post-text" data-generated-social-text="${escapeHtml(socialPost.key)}" hidden></p>
             <button class="generate-text-button social-post-generate" type="button"
                     data-generate-social-text="${escapeHtml(socialPost.key)}"
@@ -2334,7 +2564,31 @@ function socialPostGeneratorCard(event) {
 }
 
 function actionDescription(action, event) {
-    return `${action.description} Товар: ${event.product}. Повод: ${event.title}. Промокод: ${currentPromoCode(event)}, скидка: ${currentDiscountPercent(event)}%.`;
+    return `${contentIdeaByChannel(action.label, event)} Промокод: ${currentPromoCode(event)}, скидка: ${currentDiscountPercent(event)}%.`;
+}
+
+function contentIdeaByChannel(label, event) {
+    const product = event.product;
+    const title = event.title;
+    if (label.includes('Блог')) {
+        return `Идея для блога: рассказать историю товара "${product}" через повод "${title}", добавить совет по выбору и сценарий использования.`;
+    }
+    if (label.includes('Рецепты')) {
+        return `Идея рецепта: показать, как использовать "${product}" в сезонном блюде под событие "${title}".`;
+    }
+    if (label.includes('Сторисы')) {
+        return `Идея сторис: короткая серия из фото товара, пользы, промокода и финального призыва сохранить подборку.`;
+    }
+    if (label.includes('E-mail')) {
+        return `Идея рассылки: включить "${product}" в тематическую подборку и объяснить, почему он подходит к событию "${title}".`;
+    }
+    if (label.includes('Пуш')) {
+        return `Идея пуша: коротко связать "${title}" с выгодой на "${product}" и промокодом.`;
+    }
+    if (label.includes('Соцсети')) {
+        return `Идея поста: сделать акцент на поводе "${title}", товаре "${product}" и простой выгоде для покупателя.`;
+    }
+    return `Идея: связать "${product}" с событием "${title}" и предложить покупателю понятную выгоду.`;
 }
 
 function normalizedMarketplaceChannel(channel) {
@@ -2534,7 +2788,7 @@ async function sendJson(url, method, payload) {
         body: JSON.stringify(payload)
     });
     if (!response.ok) {
-        throw new Error(`Request failed: ${response.status}`);
+        throw new Error(await responseErrorMessage(response));
     }
     return response.json();
 }
@@ -2542,9 +2796,18 @@ async function sendJson(url, method, payload) {
 async function fetchJson(url) {
     const response = await fetch(url);
     if (!response.ok) {
-        throw new Error(`Request failed: ${response.status}`);
+        throw new Error(await responseErrorMessage(response));
     }
     return response.json();
+}
+
+async function responseErrorMessage(response) {
+    try {
+        const payload = await response.json();
+        return payload.message || payload.error || `Ошибка запроса: ${response.status}`;
+    } catch (error) {
+        return `Ошибка запроса: ${response.status}`;
+    }
 }
 
 function loadAppliedActions() {

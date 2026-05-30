@@ -1,12 +1,16 @@
 package com.example.spring.controller;
 
 import com.example.spring.model.dto.marketing.AdminEventDto;
+import com.example.spring.model.dto.marketing.AiHealthResponse;
+import com.example.spring.model.dto.marketing.AiTextRequest;
+import com.example.spring.model.dto.marketing.AiTextResponse;
 import com.example.spring.model.dto.marketing.AssortmentItemDto;
 import com.example.spring.model.dto.marketing.CalendarPeriod;
 import com.example.spring.model.dto.marketing.DashboardDto;
 import com.example.spring.model.dto.marketing.FarmerCalendarStateDto;
 import com.example.spring.model.dto.marketing.FarmerDto;
 import com.example.spring.model.dto.marketing.MarketingCalendarResponse;
+import com.example.spring.service.GigaChatService;
 import com.example.spring.service.jpa.MarketingCalendarJpaComponent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,6 +34,7 @@ import java.util.List;
 public class MarketingCalendarController {
 
     private final MarketingCalendarJpaComponent jpaComponent;
+    private final GigaChatService gigaChatService;
 
     @GetMapping("/calendar")
     public MarketingCalendarResponse getCalendar(
@@ -56,6 +61,11 @@ public class MarketingCalendarController {
     @GetMapping("/assortment")
     public List<AssortmentItemDto> getAssortment(@RequestParam(required = false) Long organizationId) {
         return jpaComponent.getAssortment(organizationId);
+    }
+
+    @PostMapping("/assortment")
+    public AssortmentItemDto createAssortmentItem(@RequestBody AssortmentItemDto request) {
+        return jpaComponent.createAssortmentItem(request);
     }
 
     @GetMapping("/farmers")
@@ -106,5 +116,42 @@ public class MarketingCalendarController {
     @DeleteMapping("/admin/events/{eventId}")
     public void deleteAdminEvent(@PathVariable Long eventId) {
         jpaComponent.deleteAdminEvent(eventId);
+    }
+
+    @PostMapping("/ai/social-post")
+    public AiTextResponse generateSocialPost(@RequestBody AiTextRequest request) {
+        return AiTextResponse.builder()
+                .text(gigaChatService.complete(request.getPrompt()))
+                .build();
+    }
+
+    @PostMapping("/ai/metrics-analysis")
+    public AiTextResponse analyzeMetrics(@RequestBody AiTextRequest request) {
+        return AiTextResponse.builder()
+                .text(gigaChatService.complete(request.getPrompt()))
+                .build();
+    }
+
+    @GetMapping("/ai/health")
+    public AiHealthResponse aiHealth() {
+        try {
+            return AiHealthResponse.builder()
+                    .ok(true)
+                    .message("GigaChat is available")
+                    .sample(gigaChatService.healthCheck())
+                    .build();
+        } catch (ResponseStatusException exception) {
+            return AiHealthResponse.builder()
+                    .ok(false)
+                    .message(exception.getReason())
+                    .sample("")
+                    .build();
+        } catch (RuntimeException exception) {
+            return AiHealthResponse.builder()
+                    .ok(false)
+                    .message(exception.getMessage())
+                    .sample("")
+                    .build();
+        }
     }
 }

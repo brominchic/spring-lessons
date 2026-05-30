@@ -13,6 +13,7 @@ import com.example.spring.model.entity.marketing.EventTemplateEntity;
 import com.example.spring.model.entity.marketing.FarmerActionStateEntity;
 import com.example.spring.model.entity.marketing.FarmerCalendarHistoryEntity;
 import com.example.spring.model.entity.marketing.FarmerCampaignActualEntity;
+import com.example.spring.model.entity.marketing.FarmerEntity;
 import com.example.spring.model.entity.marketing.FarmerPromotionSettingEntity;
 import com.example.spring.repositories.marketing.AssortmentItemRepository;
 import com.example.spring.repositories.marketing.EventCategoryBoostRepository;
@@ -182,6 +183,55 @@ public class MarketingCalendarJpaComponent {
             result.add(mapper.entityToDto(item));
         }
         return result;
+    }
+
+    @Transactional
+    public AssortmentItemDto createAssortmentItem(AssortmentItemDto request) {
+        if (request.getOrganizationId() == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "organizationId is required");
+        }
+        String name = cleanRequired(request.getName(), "name");
+        String category = cleanRequired(request.getCategory(), "category");
+        BigDecimal price = request.getPrice() == null ? BigDecimal.ZERO : request.getPrice();
+        if (price.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "price must be positive");
+        }
+
+        FarmerEntity farmer = farmerRepository.findById(request.getOrganizationId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Farmer not found"));
+        Long id = Math.max(assortmentRepository.maxId(), assortmentRepository.maxProductId()) + 1;
+        List<String> tags = request.getTags() == null || request.getTags().isEmpty()
+                ? List.of(category, name)
+                : request.getTags();
+        AssortmentItemEntity item = AssortmentItemEntity.builder()
+                .id(id)
+                .farmer(farmer)
+                .productId(id)
+                .name(name)
+                .category(category)
+                .productDescription(cleanOptional(request.getProductDescription(), "Товар добавлен вручную"))
+                .urlProduct("manual://assortment/" + id)
+                .price(price.setScale(2, RoundingMode.HALF_UP))
+                .stock(Math.max(0, request.getStock() == null ? 0 : request.getStock()))
+                .monthlySales(Math.max(0, request.getMonthlySales() == null ? 0 : request.getMonthlySales()))
+                .tags(new ArrayList<>(tags))
+                .build();
+        return mapper.entityToDto(assortmentRepository.save(item));
+    }
+
+    private String cleanRequired(String value, String fieldName) {
+        String result = cleanOptional(value, "");
+        if (result.isBlank()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, fieldName + " is required");
+        }
+        return result;
+    }
+
+    private String cleanOptional(String value, String fallback) {
+        if (value == null || value.trim().isEmpty()) {
+            return fallback;
+        }
+        return value.trim();
     }
 
     @Transactional(readOnly = true)
